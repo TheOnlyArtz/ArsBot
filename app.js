@@ -62,12 +62,9 @@ client.on("ready", () => {
     Set the the bot to stream
     on a valid URI
     */
-    // client.user.setGame(
-    //   `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
-    //   "https://www.twitch.tv/theonlyartz"
-    // );
     client.user.setGame(
-      `New Git: https://goo.gl/qdYfHg`
+      `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
+      "https://www.twitch.tv/theonlyartz"
     );
 
   }, (100000))

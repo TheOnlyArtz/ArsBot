@@ -62,10 +62,14 @@ client.on("ready", () => {
     Set the the bot to stream
     on a valid URI
     */
+    // client.user.setGame(
+    //   `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
+    //   "https://www.twitch.tv/theonlyartz"
+    // );
     client.user.setGame(
-      `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
-      "https://www.twitch.tv/theonlyartz"
+      `New Git: https://goo.gl/qdYfHg`
     );
+
   }, (100000))
   const snekfetch = require('snekfetch')
   console.log("I\'m Online!");

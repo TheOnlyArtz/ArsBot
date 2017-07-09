@@ -1,7 +1,7 @@
 const sql = require('sqlite');
 const Discord = require('discord.js');
 
-sql.open('./announcehey.sqlite');
+sql.open('./localDBs/announcehey.sqlite');
 const knexDB = require('knex')({
     client: 'mysql',
     connection: {
@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
   // Weed upgrade menu.
     let price;
 
-    if (message.content == '~weed upgrade menu' || message.content == '~weed upgrading menu' || message.content == '~weed upgrade') {
+    if (message.content === '~weed upgrade menu' || message.content === '~weed upgrading menu' || message.content === '~weed upgrade') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(l => {
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(row => {
                 if (!l[0]) {
@@ -67,7 +67,7 @@ exports.run = async (client, message, args) => {
         });
     }
   // BlueCheese
-    if (message.content == '~weed upgrade BlueCheese' || message.content == '~weed upgrade bluecheese') {
+    if (message.content === '~weed upgrade BlueCheese' || message.content === '~weed upgrade bluecheese') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
         });
     }
 // BlueBerry
-    if (message.content == '~weed upgrade BlueBerry' || message.content == '~weed upgrade blueberry') {
+    if (message.content === '~weed upgrade BlueBerry' || message.content === '~weed upgrade blueberry') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
@@ -109,15 +109,15 @@ exports.run = async (client, message, args) => {
                     await message.reply('You cant upgrade since you dont even have weed **YET**');
                 } else if (row[0].money < 2500) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 2500`);
-                } else if (row[0].level == 'BlueBerry') {
+                } else if (row[0].level === 'BlueBerry') {
                     await message.reply('You already have the BlueBerry farm!');
-                } else if (row[0].level == 'PurpleKush' ||
-      row[0].level == 'BlueDream' ||
-       row[0].level == 'OgKush' ||
-     row[0].level == 'greenCrack' ||
-     row[0].level == 'sourDiesel' ||
-    row[0].level == 'jackHerer' ||
-    row[0].level == 'lemonHaze') {
+                } else if (row[0].level === 'PurpleKush' ||
+      row[0].level === 'BlueDream' ||
+       row[0].level === 'OgKush' ||
+     row[0].level === 'greenCrack' ||
+     row[0].level === 'sourDiesel' ||
+    row[0].level === 'jackHerer' ||
+    row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to **BlueBerry** farm`);
@@ -127,7 +127,7 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 2500),
                         level: 'BlueBerry'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                  });
+                    });
                 }
             }).catch(err => {
                 console.error(err);
@@ -139,7 +139,7 @@ exports.run = async (client, message, args) => {
 
 // PurpleKush
 
-    if (message.content == '~weed upgrade PurpleKush' || message.content == '~weed upgrade purplekush') {
+    if (message.content === '~weed upgrade PurpleKush' || message.content === '~weed upgrade purplekush') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
@@ -153,12 +153,12 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 3000) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 3000`);
                 } else if (
-      row[0].level == 'BlueDream' ||
-       row[0].level == 'OgKush' ||
-     row[0].level == 'greenCrack' ||
-     row[0].level == 'sourDiesel' ||
-    row[0].level == 'jackHerer' ||
-    row[0].level == 'lemonHaze') {
+      row[0].level === 'BlueDream' ||
+       row[0].level === 'OgKush' ||
+     row[0].level === 'greenCrack' ||
+     row[0].level === 'sourDiesel' ||
+    row[0].level === 'jackHerer' ||
+    row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **PurpleKush** farm`);
@@ -180,12 +180,12 @@ exports.run = async (client, message, args) => {
 
 // BlueDream
 
-    if (message.content == '~weed upgrade BlueDream' || message.content == '~weed upgrade bluedream') {
+    if (message.content === '~weed upgrade BlueDream' || message.content === '~weed upgrade bluedream') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -194,11 +194,11 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 7500) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 7500`);
                 } else if (
-       row[0].level == 'OgKush' ||
-     row[0].level == 'greenCrack' ||
-     row[0].level == 'sourDiesel' ||
-    row[0].level == 'jackHerer' ||
-    row[0].level == 'lemonHaze') {
+       row[0].level === 'OgKush' ||
+     row[0].level === 'greenCrack' ||
+     row[0].level === 'sourDiesel' ||
+    row[0].level === 'jackHerer' ||
+    row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **BlueDream** farm`);
@@ -220,12 +220,12 @@ exports.run = async (client, message, args) => {
 
 // OG kush
 
-    if (message.content == '~weed upgrade OgKush' || message.content == '~weed upgrade ogkush' || message.content == '~weed upgrade og kush') {
+    if (message.content === '~weed upgrade OgKush' || message.content === '~weed upgrade ogkush' || message.content === '~weed upgrade og kush') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -234,10 +234,10 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 10000) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 10,000`);
                 } else if (
-     row[0].level == 'greenCrack' ||
-     row[0].level == 'sourDiesel' ||
-    row[0].level == 'jackHerer' ||
-    row[0].level == 'lemonHaze') {
+     row[0].level === 'greenCrack' ||
+     row[0].level === 'sourDiesel' ||
+    row[0].level === 'jackHerer' ||
+    row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **OgKush** farm`);
@@ -259,12 +259,12 @@ exports.run = async (client, message, args) => {
 
 // GreenCrack
 
-    if (message.content == '~weed upgrade greenCrack' || message.content == '~weed upgrade green crack' || message.content == '~weed upgrade greencrack') {
+    if (message.content === '~weed upgrade greenCrack' || message.content === '~weed upgrade green crack' || message.content === '~weed upgrade greencrack') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -273,9 +273,9 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 17500) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 17,500`);
                 } else if (
-   row[0].level == 'sourDiesel' ||
-  row[0].level == 'jackHerer' ||
-  row[0].level == 'lemonHaze') {
+   row[0].level === 'sourDiesel' ||
+  row[0].level === 'jackHerer' ||
+  row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **greenCrack** farm`);
@@ -297,12 +297,12 @@ exports.run = async (client, message, args) => {
 
 // SourDiesel
 
-    if (message.content == '~weed upgrade sourDiesel' || message.content == '~weed upgrade sour diesel' || message.content == '~weed upgrade sourdiesel') {
+    if (message.content === '~weed upgrade sourDiesel' || message.content === '~weed upgrade sour diesel' || message.content === '~weed upgrade sourdiesel') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -311,8 +311,8 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 20000) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 20,000`);
                 } else if (
-  row[0].level == 'jackHerer' ||
-  row[0].level == 'lemonHaze') {
+  row[0].level === 'jackHerer' ||
+  row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **sourDiesel** farm`);
@@ -334,12 +334,12 @@ exports.run = async (client, message, args) => {
 
 // JackHerer
 
-    if (message.content == '~weed upgrade jackHerer' || message.content == '~weed upgrade jackherer' || message.content == '~weed upgrade jack herer') {
+    if (message.content === '~weed upgrade jackHerer' || message.content === '~weed upgrade jackherer' || message.content === '~weed upgrade jack herer') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -348,7 +348,7 @@ exports.run = async (client, message, args) => {
                 } else if (row[0].money < 25000) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 25,000`);
                 } else if (
-  row[0].level == 'lemonHaze') {
+  row[0].level === 'lemonHaze') {
                     message.reply('You cant upgrade to a lower farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to the **jackHerer** farm`);
@@ -371,7 +371,7 @@ exports.run = async (client, message, args) => {
 
 // LemonHaze
 
-    if (message.content == '~weed upgrade lemonHaze' || message.content == '~weed upgrade lemonhaze' || message.content == '~weed upgrade lemon haze') {
+    if (message.content === '~weed upgrade lemonHaze' || message.content === '~weed upgrade lemonhaze' || message.content === '~weed upgrade lemon haze') {
         knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async l => {
             if (!l) {
                 return message.reply('Econ mod is not enabled for this server!');
@@ -421,45 +421,45 @@ exports.run = async (client, message, args) => {
                         gram = `${row[0].weedamount} **Grams**`;
                     }
                     let smoke;
-                    if (row[0].smokes == null) {
+                    if (row[0].smokes === null) {
                         smoke = 0;
                     } else {
                         smoke = row[0].smokes;
                     }
                     let donations;
-                    if (row[0].donations == null) {
+                    if (row[0].donations === null) {
                         donations = 0;
                     } else {
                         donations = row[0].donations;
                     }
-                    if (row[0].level == 'PurpleKush') {
+                    if (row[0].level === 'PurpleKush') {
                         price = 3;
                     } else
-                  if (row[0].level == 'BlueBerry') {
+                  if (row[0].level === 'BlueBerry') {
                       price = 4;
                   } else
-                  if (row[0].level == 'BlueCheese') {
+                  if (row[0].level === 'BlueCheese') {
                       price = 2;
                   } else
-                  if (row[0].level == 'BubbaKush') {
+                  if (row[0].level === 'BubbaKush') {
                       price = 1;
                   } else
-                  if (row[0].level == 'BlueDream') {
+                  if (row[0].level === 'BlueDream') {
                       price = 5;
                   } else
-                  if (row[0].level == 'OgKush') {
+                  if (row[0].level === 'OgKush') {
                       price = 6;
                   } else
-                  if (row[0].level == 'greenCrack') {
+                  if (row[0].level === 'greenCrack') {
                       price = 12;
                   } else
-                  if (row[0].level == 'sourDiesel') {
+                  if (row[0].level === 'sourDiesel') {
                       price = 20;
                   } else
                   if (row[0].level == 'jackHerer') {
                       price = 25;
                   } else
-                  if (row[0].level == 'lemonHaze') {
+                  if (row[0].level === 'lemonHaze') {
                       price = 30;
                   }
 
@@ -558,16 +558,16 @@ exports.run = async (client, message, args) => {
                     message.reply('Hey, you dont even have weed to bet on!');
                 } else {
                     if (!guess) {
-                        return message.reply('Put a guessing number to bet on please! \`EXAMPLE: ~betweed <1-5> <deposit amount>\`');
+                        return message.reply('Put a guessing number to bet on please! `EXAMPLE: ~betweed <1-5> <deposit amount>`');
                     }
                     if (isNaN(guess)) {
-                        return message.reply('You must enter an actual guessing number \`EXAMPLE: ~betweed <guessnumber> <deposit amount>\`');
+                        return message.reply('You must enter an actual guessing number `EXAMPLE: ~betweed <guessnumber> <deposit amount>`');
                     }
                     if (Number(guess) > 5) {
-                        return message.reply('The number of the guess must be lower than 5. \`EXAMPLE: ~betweed <guessnumber> <deposit amount>\`');
+                        return message.reply('The number of the guess must be lower than 5. `EXAMPLE: ~betweed <guessnumber> <deposit amount>`');
                     }
                     if (Number(guess) < 1) {
-                        return message.reply('The number of the guess must be greater than 1. \`EXAMPLE: ~betweed <guessnumber> <deposit amount>\`');
+                        return message.reply('The number of the guess must be greater than 1. `EXAMPLE: ~betweed <guessnumber> <deposit amount>`');
                     }
           // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (!deposit) {
@@ -577,7 +577,7 @@ exports.run = async (client, message, args) => {
                         return message.reply(`You dont have ${deposit} Grams of weed`);
                     }
                     if (isNaN(deposit)) {
-                        return message.reply('You must enter an actual number of weed \`EXAMPLE: ~betweed <guessnumber> <deposit amount>\`');
+                        return message.reply('You must enter an actual number of weed `EXAMPLE: ~betweed <guessnumber> <deposit amount>`');
                     }
                     if (Number(guess) !== final) {
                         const embed = new Discord.RichEmbed()
@@ -741,39 +741,39 @@ exports.run = async (client, message, args) => {
             if (!owner[0]) {
                 return message.reply('Econ mode is not enabled for this server');
             }
-            if (owner[0].agree == 'false') {
+            if (owner[0].agree === 'false') {
                 return message.reply('Econ mode is not enabled for this server');
             }
             let amount = message.content.split(' ')[2];
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
-                if (row[0].level == 'PurpleKush') {
+                if (row[0].level === 'PurpleKush') {
                     price = 3;
                 } else
-                if (row[0].level == 'BlueBerry') {
+                if (row[0].level === 'BlueBerry') {
                     price = 2;
                 } else
-                if (row[0].level == 'BlueCheese') {
+                if (row[0].level === 'BlueCheese') {
                     price = 1.5;
                 } else
-                if (row[0].level == 'BubbaKush') {
+                if (row[0].level === 'BubbaKush') {
                     price = 0.5;
                 } else
-                if (row[0].level == 'BlueDream') {
+                if (row[0].level === 'BlueDream') {
                     price = 5;
                 } else
-                if (row[0].level == 'OgKush') {
+                if (row[0].level === 'OgKush') {
                     price = 6;
                 } else
-                if (row[0].level == 'greenCrack') {
+                if (row[0].level === 'greenCrack') {
                     price = 12;
                 } else
-                if (row[0].level == 'sourDiesel') {
+                if (row[0].level === 'sourDiesel') {
                     price = 20;
                 } else
-                if (row[0].level == 'jackHerer') {
+                if (row[0].level === 'jackHerer') {
                     price = 25;
                 } else
-                if (row[0].level == 'lemonHaze') {
+                if (row[0].level === 'lemonHaze') {
                     price = 30;
                 }
 

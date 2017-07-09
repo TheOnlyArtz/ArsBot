@@ -1,12 +1,14 @@
 exports.run = (client, message) => {
-  let Discord = require("discord.js")
-  var target = message.mentions.users.first();
+    let Discord = require('discord.js');
+    let target = message.mentions.users.first();
 
-    if (message.mentions.users.size === 0) return
+    if (message.mentions.users.size === 0) {
+        return;
+    }
     const embed = new Discord.RichEmbed()
     .setAuthor(`${target.username}`, `${target.displayAvatarURL}`)
 
-    .setColor(0xc1c1c1)
+    .setColor(0xC1C1C1)
     .setThumbnail(`${target.displayAvatarURL}`)
 
     .setTimestamp(new Date().toLocaleString())
@@ -19,8 +21,8 @@ exports.run = (client, message) => {
     .addField('Last message sent by user', `${target.lastMessage}`, true);
 
     message.channel.send({embed})
-    .catch(console.error)
-  };
-  module.exports.help = {
-    name: "test"
-  }
+    .catch(console.error);
+};
+module.exports.help = {
+    name: 'test'
+};

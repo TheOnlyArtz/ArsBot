@@ -16,18 +16,18 @@ const sql = require("sqlite");
 sql.open("./localDBs/announcehey.sqlite")
 const cooldown = new Set();
 const maintance = {
-    "on" : false,
-    "time": "30 Minutes"
+  "on": false,
+  "time": "30 Minutes"
+}
+const knexDB = require('knex')({
+  client: 'mysql',
+  connection: {
+    host: 'localhost',
+    user: 'admin',
+    password: "1234561asd",
+    database: 'arsbot'
   }
-  const knexDB = require('knex')({
-    client: 'mysql',
-    connection: {
-      host : 'localhost',
-      user : 'admin',
-      password : "1234561asd",
-      database : 'arsbot'
-    }
-  });
+});
 // let muteRole = client.guilds.get(message.guild.id).roles.find("name", "muted");
 // const ddiff = require ("return-deep-diff");
 const fs = require("fs");
@@ -40,11 +40,11 @@ client.on("ready", () => {
   setInterval(() => {
     database.query("SELECT 1", (error) => {
       if (error && error.fatal) database = sql.createConnection({
-        host: "127.0.0.1",
-        user: "root",
-        database: "arsbot"
-      })
-    .catch(console.error)
+          host: "127.0.0.1",
+          user: "root",
+          database: "arsbot"
+        })
+        .catch(console.error)
     })
   }, 8000);
   console.log(chalk.gray.underline.bold(`[${time}] - {${__filename}}: `));
@@ -53,7 +53,7 @@ client.on("ready", () => {
       `${client.guilds.size} Servers`,
       `${client.users.size} Users`,
       `${client.channels.size} Channels`,
-     `http://arsbot.xyz`,
+      `http://arsbot.xyz`,
       `TheOnlyArtz`,
       `Ronen`
     ];
@@ -64,8 +64,8 @@ client.on("ready", () => {
     */
     client.user.setGame(
       `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
-     "https://www.twitch.tv/theonlyartz"
-   );
+      "https://www.twitch.tv/theonlyartz"
+    );
   }, (100000))
   const snekfetch = require('snekfetch')
   console.log("I\'m Online!");
@@ -81,9 +81,9 @@ To different files
 client.commands = new Discord.Collection();
 
 fs.readdir("./commands/", (err, files) => {
-  if(err) console.error(err);
+  if (err) console.error(err);
   let jsfiles = files.filter(f => f.split(".").pop() === "js");
-  if(jsfiles.length <= 0) {
+  if (jsfiles.length <= 0) {
     console.log("No commands to load!");
     return;
   }
@@ -107,13 +107,13 @@ client.on("guildCreate", guild => {
   //Whenever a guild adds the Bot create a channel called mod-log
   //And disable the ability to write there (for @everyone role)
   client.channels.get("315129822571528193").edit({
-   name : `${client.guilds.size}-Servers`
-})
-.catch(console.error);
+      name: `${client.guilds.size}-Servers`
+    })
+    .catch(console.error);
   guild.createChannel("mod-log", "text").then(channel => channel.overwritePermissions(guild.id, {
-    SEND_MESSAGES: false
-  }))
-  .catch(console.error)
+      SEND_MESSAGES: false
+    }))
+    .catch(console.error)
   /*
   Sends a "greeting" message that explains quickly on the bot
   */
@@ -122,22 +122,22 @@ client.on("guildCreate", guild => {
   Send a "server-log" message to ArsBot offical server
   */
   guild.defaultChannel.createInvite({
-    maxAge: 0
-  }).then((invite) => {
-    const cnl = client.channels.get("315129822571528193");
-    const embed = new Discord.RichEmbed()
-      .addField("ServerName:", `${guild.name}`, true)
-      .addField("Members", `${guild.memberCount}`, true)
-      .addField('Invite link:', `http://discord.gg/${invite.code}`, true)
-      .addField("Channels", `${guild.channels.size}`, true)
-      .addField("Owner", `${guild.owner}`, true)
-      .setThumbnail(guild.iconURL())
-      .setTimestamp();
-    cnl.send({
-      embed
-    }).catch(console.error)
-  })
-  .catch(console.error)
+      maxAge: 0
+    }).then((invite) => {
+      const cnl = client.channels.get("315129822571528193");
+      const embed = new Discord.RichEmbed()
+        .addField("ServerName:", `${guild.name}`, true)
+        .addField("Members", `${guild.memberCount}`, true)
+        .addField('Invite link:', `http://discord.gg/${invite.code}`, true)
+        .addField("Channels", `${guild.channels.size}`, true)
+        .addField("Owner", `${guild.owner}`, true)
+        .setThumbnail(guild.iconURL())
+        .setTimestamp();
+      cnl.send({
+        embed
+      }).catch(console.error)
+    })
+    .catch(console.error)
   //Create a role called "muted" for the "mute" command
   guild.createRole({
       data: {
@@ -150,7 +150,7 @@ client.on("guildCreate", guild => {
 
     .then(role => console.log(`Created role ${role}`))
     .catch(console.error)
-    //Post the serverAmount inside discordbots.org/api/bots/ID/stats
+  //Post the serverAmount inside discordbots.org/api/bots/ID/stats
   fetch.post(`https://discordbots.org/api/bots/${client.user.id}/stats`)
     .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwODkzNjg5ODU2NjE2MDM4NCIsImlhdCI6MTQ5NTczMDg4N30.sdmEgx6mT8HATbAYxhTDFhP9VSk6SjaYBOR0D3ujSt4')
     .send({
@@ -207,20 +207,20 @@ client.on("guildMemberRemove", member => {
 });
 
 process.on('unhaldedRejection', (reason, p) => {
-      console.error()
+  console.error()
 });
 
 
 let servers = {};
 var prefix = "~"
-let blocked = new Array (
+let blocked = new Array(
   "yolooo",
   "wellp",
   "fuckyou"
 )
 client.on("message", async(message) => {
   blocked.forEach(function(word) {
-    if(message.content.includes(word)) {
+    if (message.content.includes(word)) {
       message.delete();
     }
   });
@@ -230,64 +230,63 @@ client.on("message", async(message) => {
       What will we do? Our Database system are getting very stuck and causing lots of bugs so we will move to other module`);
 
 
-    knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async(l) => {
+  knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(async(l) => {
     //Connect to the Sqlite and fetch the economy system stats
     knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async(row) => {
       if (!row[0]) {
         knexDB.insert({
-            userid: message.author.id,
-            guildid: message.guild.id,
-            weedamount: 0
+          userid: message.author.id,
+          guildid: message.guild.id,
+          weedamount: 0
+        }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {}).catch()
+
+      } else {
+        if (!l[0]) return;
+        if (!l[0].level == "false") return;
+        let weedmont;
+        if (!row[0]) {
+          weedmont = (Math.random() * (50 - 20) + 51.2).toFixed(2);
+        } else
+        if (row[0].level == "BlueBerry") {
+          weedmont = (Math.random() * (59 - 20) + 51.2).toFixed(2);
+        } else
+        if (row[0].level == "BlueCheese") {
+          weedmont = (Math.random() * (59 - 20) + 51.2).toFixed(2);
+        } else
+        if (row[0].level == "BubbaKush") {
+          weedmont = (Math.random() * (60 - 20) + 51.2).toFixed(2);
+        } else
+        if (row[0].level == "BlueDream") {
+          weedmont = (Math.random() * (80 - 30.5) + 30.2).toFixed(2);
+        } else
+        if (row[0].level == "OgKush") {
+          weedmont = (Math.random() * (75 - 30.5) + 30.2).toFixed(2);
+        } else
+        if (row[0].level == "greenCrack") {
+          weedmont = (Math.random() * (50 - 20.61) + 20.2).toFixed(2)
+        } else
+        if (row[0].level == "sourDiesel") {
+          weedmont = (Math.random() * (45 - 20.61) + 20.2).toFixed(2)
+        } else
+        if (row[0].level == "jackHerer") {
+          weedmont = (Math.random() * (40 - 20.61) + 20.2).toFixed(2)
+        } else
+        if (row[0].level == "lemonHaze") {
+          weedmont = (Math.random() * (50 - 20.61) + 20.2).toFixed(2)
+        };
+        //Checking if the server is allowing economy system and if not , return;
+        // if(`${row.userid.message.guild.owner}` === "false") return;
+        if (cooldown.has(message.author.id && message.guild.id)) return;
+        cooldown.add(message.author.id && message.guild.id);
+        //Sets a cooldown for the economy system, 20seconds
+        setTimeout(() => {
+          cooldown.delete(message.author.id && message.guild.id);
+        }, 78000);
+        knexDB.update({
+          weedamount: parseInt(row[0].weedamount) + parseInt(weedmont)
         }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
-        }).catch()
 
-        } else {
-          if(!l[0]) return;
-          if(!l[0].level == "false") return;
-          let weedmont;
-          if (!row[0]) {
-                  weedmont = (Math.random() * (50 - 20) + 51.2).toFixed(2);
-              } else
-                if (row[0].level == "BlueBerry") {
-                  weedmont = (Math.random() * (59 - 20) + 51.2).toFixed(2);
-              } else
-                if (row[0].level == "BlueCheese") {
-                  weedmont = (Math.random() * (59 - 20) + 51.2).toFixed(2);
-              } else
-                if (row[0].level == "BubbaKush") {
-                  weedmont = (Math.random() * (60 - 20) + 51.2).toFixed(2);
-              } else
-                if (row[0].level == "BlueDream") {
-                  weedmont = (Math.random() * (80 - 30.5) + 30.2).toFixed(2);
-              } else
-                if (row[0].level == "OgKush") {
-                  weedmont = (Math.random() * (75 - 30.5) + 30.2).toFixed(2);
-              } else
-                if (row[0].level == "greenCrack") {
-                  weedmont = (Math.random() * (50 - 20.61) + 20.2).toFixed(2)
-              } else
-                if (row[0].level == "sourDiesel") {
-                  weedmont = (Math.random() * (45 - 20.61) + 20.2).toFixed(2)
-              } else
-                if (row[0].level == "jackHerer") {
-                  weedmont = (Math.random() * (40 - 20.61) + 20.2).toFixed(2)
-              } else
-                if (row[0].level == "lemonHaze") {
-                  weedmont = (Math.random() * (50 - 20.61) + 20.2).toFixed(2)
-                };
-          //Checking if the server is allowing economy system and if not , return;
-          // if(`${row.userid.message.guild.owner}` === "false") return;
-          if (cooldown.has(message.author.id && message.guild.id)) return;
-          cooldown.add(message.author.id && message.guild.id);
-          //Sets a cooldown for the economy system, 20seconds
-          setTimeout(() => {
-            cooldown.delete(message.author.id && message.guild.id);
-          }, 78000);
-          knexDB.update({
-              weedamount: parseInt(row[0].weedamount) + parseInt(weedmont)
-          }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
-
-          });
+        });
 
 
 
@@ -304,10 +303,10 @@ client.on("message", async(message) => {
 
   let args = message.content.split(" ").slice(1);
   let command = message.content.split(" ")[0];
-  if(!command.startsWith(prefix)) return;
+  if (!command.startsWith(prefix)) return;
   let cmd = client.commands.get(command.slice(prefix.length));
   //runs the command handler
-  if(cmd) cmd.run(client, message, args);
+  if (cmd) cmd.run(client, message, args);
 });
 
 client.login(settings.token);

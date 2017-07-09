@@ -15,7 +15,7 @@ But before of that, Our bot will detect if the server has `economy mode` enable
 And will send the right form of help you can see that all of the commands has
 Descriptions that are very easy to read and understand.
 
-#Economy Mode
+# Economy Mode
 So the `"Big Deal"` the economy mode, Maybe you are asking yourself "Artz, WTF Is Economy Mode"
 Let me answer on that question,
 Economy mode is like a small RPG game but our's is special!

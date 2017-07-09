@@ -1,6 +1,7 @@
 const Discord = require ("discord.js");
 exports.run = (client, message) => {
-  let apiKey = "6e2fcf6c7c4638dd40e54e5841ed7b45";
+  const settings = require("./config/settings.json")
+  let apiKey = settings.weatherAPI;
   const fetch = require ("node-fetch");
   let arg = message.content.split(" ").join(" ").slice(8)
   if (!arg) return message.reply("I need a city to check :wink:")

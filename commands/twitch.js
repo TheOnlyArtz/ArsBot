@@ -1,6 +1,7 @@
 const cooldown = new Set();
 exports.run = (client, message, args) => {
-  let apiKey = "jiosm57tgd3en1cw1gw9n3zolquwev";
+  const settings = require("./config/settings.json")
+  let apiKey = settings.twitchAPI;
   const Discord = require ("discord.js");
   const fetch = require ("node-fetch");
   let arg = message.content.split(" ")[1]

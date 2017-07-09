@@ -1,0 +1,9 @@
+{
+  "WAS_NOT_MENTIONED" : "You must mention someone to execute this command!",
+  "ARGS_DONT_EXIST" : "You must supply some arguments!",
+  "REASON_WASNT_FOUND" : "You must supply a reason",
+  "mod-log_WASNT_FOUND" : "I must to have a channel called `mod-log` to print my punishes inside!",
+  "TIME_WASNT_SUPPLIED" : "You must supply a time for the punish!",
+  "MUTE_ROLE_DOESNT_EXISTS" : "I don't think I had permission to create `muted` role for mutes please create one!",
+  "PERMISSION_ISSUE" : ":lock: You don't have the right permission\npermission required:"
+}

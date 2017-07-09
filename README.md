@@ -24,7 +24,7 @@ A drug dealer that will work his way up to the best farm on the gang('The server
 After you got to the final farm and you are rich
 SPOILER => New features will be unlocked ('Mid development')
 
-# LICENSE
+<!-- # LICENSE
 MIT License
 
 Copyright (c) 2017 TheOnlyArtz
@@ -45,4 +45,4 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE. -->

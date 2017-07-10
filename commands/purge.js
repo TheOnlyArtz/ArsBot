@@ -23,14 +23,14 @@ exports.run = (client, message, args) => {
     Actual purge
     */
     let ms;
-    if (messagecount == 1) {
+    if (messagecount === 1) {
         ms = 2;
     } else {
         ms = messagecount;
     }
     message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(ms))
   .catch(err => {
-      console.error(message.channel.send('I cant delete message that are older than a week\
+      console.error(err, message.channel.send('I cant delete message that are older than a week\
     And nope, The Api will not let any bot doing that!'));
   })
   // Message.reply(`You've succefully deleted \`${messagecount} Messages!\``).then(m => {

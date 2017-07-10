@@ -23,10 +23,10 @@ exports.run = (client, message, args) => {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
     }
     if (message.mentions.users.size < 1) {
-        return message.reply('You need to mention someone to Kick him!. **Usage:**\`~kick [@mention] [example]\`');
+        return message.reply('You need to mention someone to Kick him!. **Usage:**`~kick [@mention] [example]`');
     }
     if (!reason) {
-        return message.reply('You must give me a reason for mute **Usage:**\`~kick [@mention] [example]\`');
+        return message.reply('You must give me a reason for mute **Usage:**`~kick [@mention] [example]`');
     }
     if (!message.guild.member(user).kickable) {
         return message.reply('This member is above me in the `role chain` Can\'t kick him');

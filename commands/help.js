@@ -52,7 +52,7 @@ exports.run = function (client, message) {
         if (!l[0]) {
             return;
         }
-        if (l[0].agree != 'false') {
+        if (l[0].agree !== 'false') {
             return;
         }
         if (message.author.id !== message.guild.ownerID) {
@@ -81,7 +81,7 @@ exports.run = function (client, message) {
         if (!l[0]) {
             return message.reply('Check your :inbox_tray: **Help Options** : Regular (economy mode disabled!)');
         }
-        if (l[0].agree == 'false') {
+        if (l[0].agree === 'false') {
             message.channel.send('Check your :inbox_tray: **Help Options** : Regular (economy mode disabled!)');
         }
     });
@@ -90,8 +90,7 @@ exports.run = function (client, message) {
         if (!l[0]) {
             return;
         }
-        if (l[0].agree == 'false') {
-
+        if (l[0].agree === 'false') {
         } else {
             message.channel.send('Check your :inbox_tray: **Help Options** : With Economy (economy mode enabled)');
             const economy = new Discord.RichEmbed()

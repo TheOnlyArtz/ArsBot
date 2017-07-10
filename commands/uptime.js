@@ -13,15 +13,15 @@ exports.run = (client, message) => {
         minutes = Math.floor((ms - dms - hms) / cm),
         mms = minutes * cm, // Minutes, in ms
         seconds = Math.round((ms - dms - hms - mms) / cs);
-    if (seconds == 60) {
+    if (seconds === 60) {
         minutes++; // Increase by 1
         seconds = 0;
     }
-    if (minutes == 60) {
+    if (minutes === 60) {
         hours++; // Inc by 1
         minutes = 0;
     }
-    if (hours == 24) {
+    if (hours === 24) {
         days++; // Increase by 1
         hours = 0;
     }

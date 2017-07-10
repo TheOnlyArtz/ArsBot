@@ -32,13 +32,13 @@ exports.run = (client, message) => {
         return message.reply('You need to mention someone to Mute him!.');
     }
     if (!time) {
-        return message.reply('specify the time for the mute!**Usage:**\`~mute [@mention] [1m] [example]\`');
+        return message.reply('specify the time for the mute!**Usage:**`~mute [@mention] [1m] [example]`');
     }
     if (!time.match(/[1-60][s,m,h,d,w]/g)) {
-        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**\`~mute [@mention] [1m] [example]\`');
+        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**`~mute [@mention] [1m] [example]`');
     }
     if (!reason) {
-        return message.reply('You must give me a reason for Mute **Usage:**\`~mute [@mention] [15m] [example]\`');
+        return message.reply('You must give me a reason for Mute **Usage:**`~mute [@mention] [15m] [example]`');
     }
     if (reason.time < 1) {
         return message.reply('TIME?').then(message => message.delete(2000));

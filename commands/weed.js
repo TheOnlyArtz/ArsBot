@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
                 if (!l[0]) {
                     return message.reply('Econ mod is not enabled for this server!');
                 }
-                if (l[0].agree == 'false') {
+                if (l[0].agree === 'false') {
                     return message.reply('Econ mod is not enabled for this server!');
                 }
 
@@ -101,7 +101,7 @@ exports.run = async (client, message, args) => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -144,7 +144,7 @@ exports.run = async (client, message, args) => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {

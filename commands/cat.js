@@ -1,7 +1,11 @@
 const Discord = require('discord.js');
 
 const cooldown = new Set();
+
 exports.run = function (client, message) {
+  /*
+    Command's cooldown due to spam issues
+  */
     if (cooldown.has(message.author.id && message.guild.id)) {
         return message.reply('**[COOLDOWN]** Info command has **5 Minutes** Cooldown!');
     }
@@ -11,6 +15,9 @@ exports.run = function (client, message) {
         cooldown.delete(message.author.id && message.guild.id);
     }, 300000);
     const fetch = require('snekfetch');
+    /*
+      Fetch data from the restful API
+    */
     fetch.get('https://random.cat/meow').then(cat => {
         const embed = new Discord.RichEmbed()
     .setImage(`${cat.body.file}`);

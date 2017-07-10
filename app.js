@@ -145,7 +145,7 @@ client.on("guildCreate", guild => {
     .catch(console.error)
   //Post the serverAmount inside discordbots.org/api/bots/ID/stats
   fetch.post(`https://discordbots.org/api/bots/${client.user.id}/stats`)
-    .set('Authorization', config.dbotsAPI)
+    .set('Authorization', settings.dbotsAPI)
     .send({
       server_count: client.guilds.size
     })

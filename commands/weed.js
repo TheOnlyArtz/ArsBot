@@ -72,7 +72,7 @@ exports.run = async (client, message, args) => {
             if (!l[0]) {
                 return message.reply('Econ mod is not enabled for this server!');
             }
-            if (l[0].agree == 'false') {
+            if (l[0].agree === 'false') {
                 return message.reply('Econ mod is not enabled for this server!');
             }
             knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(async row => {
@@ -80,7 +80,7 @@ exports.run = async (client, message, args) => {
                     await message.reply('You cant upgrade since you dont even have weed **YET**');
                 } else if (row[0].money < 2000) {
                     await message.reply(`You do not have enough grams of weed **avaliable money:** ${row[0].money}$ / 2000`);
-                } else if (row[0].level == 'BlueCheese') {
+                } else if (row[0].level === 'BlueCheese') {
                     await message.reply('You already have the BlueCheese farm!');
                 } else {
                     await message.reply(`**[UPGRADE]** Congrats ${message.author.username} You have just upgraded to **BlueCheese** farm`);
@@ -456,7 +456,7 @@ exports.run = async (client, message, args) => {
                   if (row[0].level === 'sourDiesel') {
                       price = 20;
                   } else
-                  if (row[0].level == 'jackHerer') {
+                  if (row[0].level === 'jackHerer') {
                       price = 25;
                   } else
                   if (row[0].level === 'lemonHaze') {
@@ -595,9 +595,8 @@ exports.run = async (client, message, args) => {
             .then(m => m.react('🏆'))
             .catch(console.error);
                         knexDB.update({
-                            weedamount: (row.weedamount + (5 * deposit))
+                            weedamount: (row[0].weedamount + (5 * deposit))
                         }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                            console.log(`${message.author.username}, Just bought BlueCheese`);
                         });
             // Message.reply(`**[WIN]** GG I thought the house always wins... You just won ${deposit * 2} Grams of fresh WEED :leaves:`)
                     }

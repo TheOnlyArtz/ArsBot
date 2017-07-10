@@ -5,7 +5,7 @@ const sql = require('sqlite');
     Connect to the sqlite local database
   */
 
-sql.open('../localDBs/announcehey.sqlite');
+sql.open('./localDBs/announcehey.sqlite');
 exports.run = function (client, message) {
     let heymessage = message.content.split(' ').slice(1).join(' ');
     const database = mysql.createConnection({

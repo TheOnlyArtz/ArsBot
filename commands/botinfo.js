@@ -1,8 +1,7 @@
 const cooldown = new Set();
-
+const Discord = require("discord.js");
+const package = require("../package.json")
 exports.run = (client, message) => {
-  const Discord = require("discord.js");
-  const package = require("../package.json")
   let guild = message.guild;
   // message.delete(3000);
   var bpmb = client.ping;
@@ -11,6 +10,9 @@ exports.run = (client, message) => {
   var usageMb = process.memoryUsage().heapUsed / 1024 / 1024;
   var usage = usageMb.toFixed(2);
 
+/*
+  Cooldown for the command
+*/
   if (cooldown.has(message.author.id && message.guild.id))
     return message.reply(`This command have a cooldown of 5 **Minutes**`); // this will check if the users is in the cooldown
   cooldown.add(message.author.id && message.guild.id);
@@ -18,6 +20,9 @@ exports.run = (client, message) => {
     cooldown.delete(message.author.id && message.guild.id);
   }, 300000);
 
+  /*
+    Fetch the client info and parse it into an embed
+  */
   const embed = new Discord.RichEmbed()
     .setAuthor(`${client.user.username} Info Below`, client.user.displayAvatarURL)
     .addField(":heart: BPM", bpm, true)

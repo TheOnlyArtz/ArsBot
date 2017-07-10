@@ -83,6 +83,9 @@ exports.run = (client, message) => {
     modlog.send({
         embed
     }).catch(console.error);
+    /*
+      Query the database and update the history table
+    */
     database.query('SELECT * FROM bans WHERE guildid = ? AND userid = ?', [message.guild.id, user.id], (error, row) => {
         if (error) {
             message.channel.send('Something went wrong when quering the database. Unable to process request.');
@@ -91,7 +94,6 @@ exports.run = (client, message) => {
                 database = sql.createConnection({
                     host: '127.0.0.1',
                     user: 'root',
-        // Password: "1234561asd",
                     database: 'arsbot'
                 });
             }

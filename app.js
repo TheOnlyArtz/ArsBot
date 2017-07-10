@@ -52,10 +52,8 @@ client.on("ready", () => {
     var answers = [
       `${client.guilds.size} Servers`,
       `${client.users.size} Users`,
-      `${client.channels.size} Channels`,
-      `http://arsbot.xyz`,
-      `TheOnlyArtz`,
-      `Ronen`
+      `~help`,
+      `http://arsbot.xyz`
     ];
 
     /*
@@ -63,7 +61,7 @@ client.on("ready", () => {
     on a valid URI
     */
     client.user.setGame(
-      `~help |` + `${answers[~~(Math.random() * answers.length)]}`,
+      `${answers[~~(Math.random() * answers.length)]}`,
       "https://www.twitch.tv/theonlyartz"
     );
 

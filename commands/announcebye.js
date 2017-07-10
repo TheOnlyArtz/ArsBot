@@ -27,7 +27,7 @@ exports.run = function (client, message) {
             message.channel.send(`You've set **bye** announce messages for ${message.channel} \n Your chosen messasge to display (**${heymessage}**) Have fun! `);
         }
     }).catch(() => {
-        console.error;
+        console.error();
         sql.run('CREATE TABLE IF NOT EXISTS byehey (guildid TEXT, channelid TEXT, guildname TEXT, bye TEXT)').then(() => {
             sql.run('INSERT INTO byehey (guildid, channelid, guildname, bye) VALUES (?, ?, ?, ?)', [message.guild.id, message.channel.id, guild.name, `${heymessage}`]);
         });

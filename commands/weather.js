@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
+const settings = require('../config/settings.json');
 
 exports.run = (client, message) => {
-    const settings = require('./config/settings.json');
     let apiKey = settings.weatherAPI;
     const fetch = require('node-fetch');
     let arg = message.content.split(' ').join(' ').slice(8);
@@ -12,7 +12,7 @@ exports.run = (client, message) => {
         .then(res => {
             return res.json();
         }).then(json => {
-            if (json.main == undefined) {
+            if (json.main === undefined) {
                 return message.reply(`**${arg}** Isnt inside my query, please check again`);
             }
             let rise = json.sys.sunrise;

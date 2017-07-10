@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 
-exports.run = (client, message, args) => {
+exports.run = (client, message) => {
     let guild = message.guild;
-    var args = message.content.split(' ').slice(1);
+    let args = message.content.split(' ').slice(1);
     let argresult = args.join(' ');
     let reason = args;
     message.delete(1000);
@@ -18,7 +18,7 @@ exports.run = (client, message, args) => {
         return message.reply('You need to mention someone to unmute him!.');
     }
     message.guild.member(user).removeRole(muteRole).then(() => {
-        message.channel.send(`You\'ve succesfully unmuted ${user}`);
+        message.channel.send(`You've succesfully unmuted ${user}`);
     });
 };
 module.exports.help = {

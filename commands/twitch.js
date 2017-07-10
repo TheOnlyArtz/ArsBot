@@ -1,6 +1,7 @@
 const cooldown = new Set();
+const settings = require('../config/settings.json');
+
 exports.run = (client, message, args) => {
-    const settings = require('./config/settings.json');
     let apiKey = settings.twitchAPI;
     const Discord = require('discord.js');
     const fetch = require('node-fetch');
@@ -16,7 +17,7 @@ exports.run = (client, message, args) => {
           .then(res => {
               return res.json();
           }).then(json2 => {
-              if (json.status == 404) {
+              if (json.status === 404) {
                   return message.reply('Channel: ' + arg + '**does not exist**.').catch(console.error);
               }
               const embed = new Discord.RichEmbed()

@@ -29,7 +29,7 @@ exports.run = (client, message) => {
         return message.reply(`How much time ? **Usage:**\`~ban [@mention] [1d] [example]\``);
     }
     if (!time.match(/[1-7][s,m,h,d,w]/g)) {
-        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**\`~mute [@mention] [1m] [example]\`');
+        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**`~mute [@mention] [1m] [example]`');
     }
     if (!reason) {
         return message.reply(`You must give me a reason for the ban **Usage:**\`~ban [@mention] [1d] [example]\``);

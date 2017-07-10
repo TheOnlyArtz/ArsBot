@@ -2,6 +2,9 @@ const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
     let question = message.content.split(' ').slice(1).join(' ');
+    /*
+    List of answers that the bot can randomize
+    */
     const answers = [
         'As I See It Yes',
         'Ask Again Later',
@@ -22,6 +25,9 @@ exports.run = (client, message, args) => {
         'Yes',
         'Yes - Definitely'
     ];
+    /*
+    If author didn't ask a question return
+    */
     if (!question) {
         return message.reply('What question should I answer on? **Usage:** `~8ball is TheOnlyArtz sexy?`');
     }

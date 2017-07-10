@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client()
+const fs = require("fs");
 const moment = require("moment");
 const ms = require("ms");
 const chalk = require('chalk');
@@ -7,7 +8,6 @@ const time = moment().format(`YYYY-MM-DD HH:mm:ss`);
 const settings = require("./config/settings.json");
 const err = require("./ErrorsPerms/errors.json");
 const perms = require("./ErrorsPerms/perms.json")
-const apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwODkzNjg5ODU2NjE2MDM4NCIsImlhdCI6MTQ5NTczMDQ5NH0.JZ0B0MIonQxAnLkwtoMd1ymj8Xt547IM4nowH5nTuSY"
 const ytdl = require("ytdl-core");
 const package = require("./package.json")
 const mysql = require("mysql");
@@ -28,9 +28,7 @@ const knexDB = require('knex')({
     database: 'arsbot'
   }
 });
-// let muteRole = client.guilds.get(message.guild.id).roles.find("name", "muted");
-// const ddiff = require ("return-deep-diff");
-const fs = require("fs");
+
 client.on("ready", () => {
   var database = mysql.createConnection({
     host: "127.0.0.1",
@@ -97,10 +95,6 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-// client.on("messageReactionRemove", async(messageReaction, user) => {
-//   console.log(messageReaction);
-//   client.channels.get("326760892970827778").send(`**Emoji:** ` +  messageReaction.Message.count + " just been moved by " + user.username)
-// });
 
 client.on("guildCreate", guild => {
   //Whenever a guild adds the Bot create a channel called mod-log
@@ -151,7 +145,7 @@ client.on("guildCreate", guild => {
     .catch(console.error)
   //Post the serverAmount inside discordbots.org/api/bots/ID/stats
   fetch.post(`https://discordbots.org/api/bots/${client.user.id}/stats`)
-    .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwODkzNjg5ODU2NjE2MDM4NCIsImlhdCI6MTQ5NTczMDg4N30.sdmEgx6mT8HATbAYxhTDFhP9VSk6SjaYBOR0D3ujSt4')
+    .set('Authorization', config.dbotsAPI)
     .send({
       server_count: client.guilds.size
     })

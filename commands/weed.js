@@ -514,7 +514,7 @@ exports.run = async (client, message, args) => {
                         }, 3500);
                         setTimeout(() => {
                             msg.edit(`${message.author.username} Finished smoking`);
-                        }, 1000);
+                        }, 4000);
                     });
                     knexDB.update({
                         userid: message.author.id,

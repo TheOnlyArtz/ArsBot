@@ -90,7 +90,9 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 2000),
                         level: 'BlueCheese'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    })
+                    .catch(console.error)
                 }
             });
         });
@@ -127,14 +129,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 2500),
                         level: 'BlueBerry'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    }).catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // PurpleKush
@@ -168,14 +169,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 3000),
                         level: 'PurpleKush'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    }).catch(console.error)
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+          .catch(console.error);
     }
 
 // BlueDream
@@ -208,14 +208,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 7500),
                         level: 'BlueDream'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    }).catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // OG kush
@@ -247,14 +246,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 10000),
                         level: 'OgKush'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    }).catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // GreenCrack
@@ -285,14 +283,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 17500),
                         level: 'greenCrack'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    }).catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // SourDiesel
@@ -322,14 +319,14 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 20000),
                         level: 'sourDiesel'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                    });
+
+                    })
+                    .catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // JackHerer
@@ -358,15 +355,14 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 25000),
                         level: 'jackHerer'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                        console.log(`${message.author.username}, Just bought BlueCheese`);
-                    });
+
+                    })
+                    .catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
 // LemonHaze
@@ -389,15 +385,13 @@ exports.run = async (client, message, args) => {
                         money: (row[0].money - 25000),
                         level: 'lemonHaze'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                        console.log(`${message.author.username}, Just bought BlueCheese`);
-                    });
+
+                    }).catch(console.error);
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
   // Bank command.
@@ -531,12 +525,10 @@ exports.run = async (client, message, args) => {
                         console.log(`${message.author.username}, Just bought BlueCheese`);
                     });
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
   // Bet command
@@ -601,12 +593,10 @@ exports.run = async (client, message, args) => {
             // Message.reply(`**[WIN]** GG I thought the house always wins... You just won ${deposit * 2} Grams of fresh WEED :leaves:`)
                     }
                 }
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
 
   // Donate command
@@ -786,7 +776,7 @@ exports.run = async (client, message, args) => {
                     return message.reply(`You dont have that much weed, avaliable weed: ${row[0].weedamount} (grams)`);
                 }
                 knexDB.update({
-                    weedamount: (row[0].weedamount - parseInt(amount)),
+                    weedamount: (row[0].weedamount - parseInt(amount, 10)),
                     money: row[0].money + (amount * price)
                 }).into('weedbank').where('userid', message.author.id).andWhere('guildid', message.guild.id).then(() => {
                     const embed = new Discord.RichEmbed()

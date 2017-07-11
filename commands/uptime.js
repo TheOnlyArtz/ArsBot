@@ -1,18 +1,18 @@
-// By Amit Katz, Uptime Command!
+const Discord = require('discord.js');
+
 exports.run = (client, message) => {
-    const Discord = require('discord.js');
-    let ms = client.uptime,
-        cd = 24 * 60 * 60 * 1000, // Calc days
-        ch = 60 * 60 * 1000, // Calc hours
-        cm = 60 * 1000, // Calc minutes
-        cs = 1000, // Calc seconds
-        days = Math.floor(ms / cd),
-        dms = days * cd, // Days, in ms
-        hours = Math.floor((ms - dms) / ch),
-        hms = hours * ch, // Hours, in ms
-        minutes = Math.floor((ms - dms - hms) / cm),
-        mms = minutes * cm, // Minutes, in ms
-        seconds = Math.round((ms - dms - hms - mms) / cs);
+    let ms = client.uptime;
+    let cd = 24 * 60 * 60 * 1000; // Calc days
+    let ch = 60 * 60 * 1000; // Calc hours
+    let cm = 60 * 1000; // Calc minutes
+    let cs = 1000; // Calc seconds
+    let days = Math.floor(ms / cd);
+    let dms = days * cd; // Days, in ms
+    let hours = Math.floor((ms - dms) / ch);
+    let hms = hours * ch; // Hours, in ms
+    let minutes = Math.floor((ms - dms - hms) / cm);
+    let mms = minutes * cm; // Minutes, in ms
+    let seconds = Math.round((ms - dms - hms - mms) / cs);
     if (seconds === 60) {
         minutes++; // Increase by 1
         seconds = 0;

@@ -34,7 +34,8 @@ exports.run = function (client, message) {
                         weedamount: 0
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    });
+                    })
+                    .catch(console.error);
                 } else {
                   /*
                     If mode is already on, return.
@@ -49,7 +50,8 @@ exports.run = function (client, message) {
                         agree: 'true'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    });
+                    })
+                    .catch(console.error);
 
                     message.channel.send('Economy mode is finally enabled have fun start by typing `~weed help` and `~bank` so you can see economy bank too :leaves:');
                 }

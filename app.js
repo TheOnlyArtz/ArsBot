@@ -35,16 +35,16 @@ client.on("ready", () => {
     user: "root",
     database: "arsbot"
   });
-  setInterval(() => {
-    database.query("SELECT 1", (error) => {
-      if (error && error.fatal) database = sql.createConnection({
-          host: "127.0.0.1",
-          user: "root",
-          database: "arsbot"
-        })
-        .catch(console.error)
-    })
-  }, 8000);
+  // setInterval(() => {
+  //   database.query("SELECT 1", (error) => {
+  //     if (error && error.fatal) database = sql.createConnection({
+  //         host: "127.0.0.1",
+  //         user: "root",
+  //         database: "arsbot"
+  //       })
+  //       .catch(console.error)
+  //   })
+  // }, 8000);
   console.log(chalk.gray.underline.bold(`[${time}] - {${__filename}}: `));
   setInterval(() => {
     var answers = [
@@ -231,7 +231,10 @@ client.on("message", async(message) => {
           userid: message.author.id,
           guildid: message.guild.id,
           weedamount: 0
-        }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {}).catch()
+        }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
+
+        })
+        .catch(console.error)
 
       } else {
         if (!l[0]) return;
@@ -279,7 +282,8 @@ client.on("message", async(message) => {
           weedamount: parseInt(row[0].weedamount) + parseInt(weedmont)
         }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
 
-        });
+        })
+        .catch(console.error)
 
 
 

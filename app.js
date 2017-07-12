@@ -35,16 +35,12 @@ client.on("ready", () => {
     user: "root",
     database: "arsbot"
   });
-  // setInterval(() => {
-  //   database.query("SELECT 1", (error) => {
-  //     if (error && error.fatal) database = sql.createConnection({
-  //         host: "127.0.0.1",
-  //         user: "root",
-  //         database: "arsbot"
-  //       })
-  //       .catch(console.error)
-  //   })
-  // }, 8000);
+  setInterval(() => {
+    knexDB.from('weedbank').where("agree", "true").then(async err => {
+
+    })
+    .catch(console.error, "ERROR")
+  }, 8000);
   console.log(chalk.gray.underline.bold(`[${time}] - {${__filename}}: `));
   setInterval(() => {
     var answers = [
@@ -219,7 +215,8 @@ client.on("message", async(message) => {
   });
   if (message.author.bot) return; //Ingore bots
   if (message.channel.type === "dm") return; // Ignore DM channels
-  if (maintance.on == true && message.content.startsWith(prefix)) return message.channel.send(`We are down for maintance amd we will be back in ${maintance.time}\n
+  if (maintance.on == true && message.content.startsWith(prefix))
+  return message.channel.send(`We are down for maintance amd we will be back in ${maintance.time}\n
       What will we do? Our Database system are getting very stuck and causing lots of bugs so we will move to other module`);
 
 

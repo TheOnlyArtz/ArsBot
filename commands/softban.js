@@ -2,11 +2,17 @@ const Discord = require('discord.js');
 const ms = require('ms');
 const sql = require('mysql');
 
-let database = sql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    database: 'arsbot'
+const knexDB = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: 'localhost',
+        user: 'admin',
+        password: '1234561asd',
+        database: 'arsbot'
+    },
+    pool: {min: 0, max: 6}
 });
+
 exports.run = (client, message, args) => {
     let reason = message.content.split(' ').slice(3).join(' ');
     let time = message.content.split(' ')[2];
@@ -21,6 +27,9 @@ exports.run = (client, message, args) => {
     }
     if (!modlog) {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
+    }
+    if (message.author.id === user.id) {
+      return message.reply("You cant punish yourself :wink:")
     }
     if (message.mentions.users.size < 1) {
         return message.reply('You need to mention someone to SoftBan him!.').then(message => message.delete(2000));
@@ -40,22 +49,24 @@ exports.run = (client, message, args) => {
 .addField('SoftBan:', `**Softbanned:** ${user.username}#${user.discriminator}\n**Moderator:** ${message.author.username}\n**Reason:** ${reason}`);
     modlog.send({embed})
   .catch(console.error);
-    database.query('SELECT * FROM bans WHERE guildid = ? AND userid = ?', [message.guild.id, user.id], (error, row) => {
-        if (error) {
-            message.channel.send('Something went wrong when quering the database. Unable to process request.');
-            console.log(error);
-            if (error && error.fatal) {
-                database = sql.createConnection({
-                    host: '127.0.0.1',
-                    user: 'root',
-            // Password: "1234561asd",
-                    database: 'arsbot'
-                });
-            }
-        } else if (row.length > 0) {
-            database.query(`UPDATE bans SET softcount = ${row[0].softcount + 1} WHERE userid = "${user.id}" AND guildid = ${message.guild.id}`);
+
+    knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
+        if (count.length > 0) {
+            knexDB.update({
+                softcount: parseInt(count[0].softcount, 10) + 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+            .catch(console.error);
         } else {
-            database.query('INSERT INTO bans (userid, softcount, guildid) VALUES (?, ?, ?)', [user.id, 1, message.guild.id]);
+            knexDB.insert({
+                userid: user.id,
+                guildid: message.guild.id,
+                softcount: 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+              .catch(console.error);
         }
     });
 };

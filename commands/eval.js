@@ -14,9 +14,6 @@ exports.run = (client, message) => {
     }
     let args = message.content.split(' ').slice(1);
     let cont = message.content.split(' ').slice(1).join(' ');
-    const up = client.emojis.get('231822389183381506');
-    const heart = client.emojis.get(`244906721741504522`);
-    const down = client.emojis.get('233238290868862976');
     message.channel.send('Evaluating...').then(msg => {
         try {
             let code = args.join(' ');
@@ -29,8 +26,8 @@ exports.run = (client, message) => {
                 try {
                     let evalcode1 = new Discord.RichEmbed()
             .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
-            .setDescription(`**${up}Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
-            .addField(`\u200b`, `**${heart}Output:**\n\n\`\`\`Output too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
+            .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+            .addField(`\u200b`, `**Output:**\n\n\`\`\`Output too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
             .setColor(0x00FF00)
             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`, `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`);
                     msg.edit({
@@ -40,8 +37,8 @@ exports.run = (client, message) => {
                 } catch (err) {
                     let errorcode1 = new Discord.RichEmbed()
             .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
-            .setDescription(`**${up}Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
-            .addField(`\u200b`, `**${down}Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
+            .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+            .addField(`\u200b`, `**Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
             .setColor(0xFF0000)
             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms `, `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`);
                     msg.edit({

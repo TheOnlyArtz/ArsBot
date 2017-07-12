@@ -1,15 +1,22 @@
 const Discord = require('discord.js');
 const sql = require('mysql');
 
-let database = sql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    database: 'arsbot'
+const knexDB = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: 'localhost',
+        user: 'admin',
+        password: '1234561asd',
+        database: 'arsbot'
+    },
+    pool: {min: 0, max: 6}
 });
+
 exports.run = (client, message, args) => {
     if (!message.guild.member(message.author).hasPermission('MANAGE_NICKNAMES')) {
         return message.reply(':lock: You need to have `MANAGE_NICKNAMES` Permission to execute `warn`').catch(console.error);
     }
+
     if (!message.guild.member(client.user).hasPermission('MANAGE_NICKNAMES')) {
         return message.reply(':lock: **I** need `MANAGE_NICKNAMES` Permissions to execute `warn`').catch(console.error);
     }
@@ -18,6 +25,9 @@ exports.run = (client, message, args) => {
     let modlog = message.guild.channels.find('name', 'mod-log');
     if (!modlog) {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
+    }
+    if (message.author.id === user.id) {
+      return message.reply("You cant punish yourself :wink:")
     }
     if (!user) {
         return message.reply('You must mention someone to warn him. **Usage:**`~warn [@mention] [example]`');
@@ -34,7 +44,8 @@ exports.run = (client, message, args) => {
         .addField('Action Warn #1:', `**User:** ${user.tag}\n**Reason:** ${reason}`);
             modlog.send({embed})
       .catch(console.error);
-            member.send(`You've got warned **Once** \n State Reason: ${reason}`);
+            member.send(`You've got warned **Once** \n State Reason: ${reason}`)
+            .catch(console.error)
         } else if (member.nickname.includes('(1)')) {
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
@@ -43,12 +54,14 @@ exports.run = (client, message, args) => {
             modlog.send({embed})
       .catch(console.error);
             member.setNickname(`${user.username}(2)`);
-            member.send(`You've got warned **Twice** next time **BAN** \n State Reason: ${reason}`);
+            member.send(`You've got warned **Twice** next time **BAN** \n State Reason: ${reason}`)
+            .catch(console.error)
         } else if (member.nickname.includes('(2)')) {
       // Message.guild.member(user).addRole(muteRole).then(() =>{
             member.setNickname(`${user.username}(BanQueue)`);
             member.send('You will get banned soon with the reason, thank you!');
-            message.author.send('The member has been already warned 2 times, and cannot get another warn I have to ban them');
+            message.author.send('The member has been already warned 2 times, and cannot get another warn I have to ban them')
+            .catch(console.error)
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
         .setTimestamp()
@@ -58,22 +71,24 @@ exports.run = (client, message, args) => {
             message.guild.member(user).ban(user, 7)
       .catch(console.error);
         }
-        database.query('SELECT * FROM bans WHERE guildid = ? AND userid = ?', [message.guild.id, user.id], (error, row) => {
-            if (error) {
-                message.channel.send('Something went wrong when quering the database. Unable to process request.');
-                console.log(error);
-                if (error && error.fatal) {
-                    database = sql.createConnection({
-                        host: '127.0.0.1',
-                        user: 'root',
-              // Password: "1234561asd",
-                        database: 'arsbot'
-                    });
-                }
-            } else if (row.length > 0) {
-                database.query(`UPDATE bans SET warncount = ${row[0].warncount + 1} WHERE userid = "${user.id}" AND guildid = ${message.guild.id}`);
+
+        knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
+            if (count.length > 0) {
+                knexDB.update({
+                    warncount: parseInt(count[0].warncount, 10) + 1
+                }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+                })
+                .catch(console.error);
             } else {
-                database.query('INSERT INTO bans (userid, warncount, guildid) VALUES (?, ?, ?)', [user.id, 1, message.guild.id]);
+                knexDB.insert({
+                    userid: user.id,
+                    guildid: message.guild.id,
+                    warncount: 1
+                }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+                })
+                  .catch(console.error);
             }
         });
     });

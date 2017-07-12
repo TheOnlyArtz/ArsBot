@@ -1,11 +1,17 @@
 const Discord = require('discord.js');
 const sql = require('mysql');
 
-let database = sql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    database: 'arsbot'
+const knexDB = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: 'localhost',
+        user: 'admin',
+        password: '1234561asd',
+        database: 'arsbot'
+    },
+    pool: {min: 0, max: 6}
 });
+
 exports.run = (client, message, args) => {
     if (!message.guild.member(message.author).hasPermission('KICK_MEMBERS')) {
         return message.reply(':lock: You dont have permissions for that').catch(console.error);
@@ -14,7 +20,7 @@ exports.run = (client, message, args) => {
         return message.reply(':lock: **I** need `KICK_MEMBERS` Permissions to execute `mute`').catch(console.error);
     }
     let user = message.mentions.users.first();
-    let reason = args;
+    let reason = message.content.split(' ').slice(2).join(' ');
     let guild = message.guild;
     let modlog = message.guild.channels.find('name', 'mod-log');
     let member = message.guild.member;
@@ -37,22 +43,24 @@ exports.run = (client, message, args) => {
     .setTimestamp()
     .addField('Kick:', `**Kicked**${user.username}#${user.discriminator}\n**Moderator** ${message.author.username} \n**Reason** ${reason}`);
     modlog.send({embed}).catch(console.error);
-    database.query('SELECT * FROM bans WHERE guildid = ? AND userid = ?', [message.guild.id, user.id], (error, row) => {
-        if (error) {
-            message.channel.send('Something went wrong when quering the database. Unable to process request.');
-            console.log(error);
-            if (error && error.fatal) {
-                database = sql.createConnection({
-                    host: '127.0.0.1',
-                    user: 'root',
-            // Password: "1234561asd",
-                    database: 'arsbot'
-                });
-            }
-        } else if (row.length > 0) {
-            database.query(`UPDATE bans SET kickcount = ${row[0].kickcount + 1} WHERE userid = "${user.id}" AND guildid = ${message.guild.id}`);
+
+    knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
+        if (count.length > 0) {
+            knexDB.update({
+                kickcount: parseInt(count[0].kickcount, 10) + 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+            .catch(console.error);
         } else {
-            database.query('INSERT INTO bans (userid, kickcount, guildid) VALUES (?, ?, ?)', [user.id, 1, message.guild.id]);
+            knexDB.insert({
+                userid: user.id,
+                guildid: message.guild.id,
+                kickcount: 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+              .catch(console.error);
         }
     });
 };

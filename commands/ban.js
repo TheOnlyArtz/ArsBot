@@ -6,11 +6,17 @@ const sql = require('mysql');
   Connect into mariaDB
 */
 
-let database = sql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    database: 'arsbot'
+const knexDB = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: 'localhost',
+        user: 'admin',
+        password: '1234561asd',
+        database: 'arsbot'
+    },
+    pool: {min: 0, max: 6}
 });
+
 exports.run = (client, message) => {
     let reason = message.content.split(' ').slice(3).join(' ');
     let time = message.content.split(' ')[2];
@@ -42,6 +48,13 @@ exports.run = (client, message) => {
     if (message.mentions.users.size < 1) {
         return message.reply('You need to mention someone to Ban him!.');
     }
+    /*
+      Dont allow self punish
+    */
+    if (message.author.id === user.id) {
+      return message.reply("You cant punish yourself :wink:")
+    }
+
     /*
       Checks if time was supplied
     */
@@ -86,21 +99,23 @@ exports.run = (client, message) => {
     /*
       Query the database and update the history table
     */
-    database.query('SELECT * FROM bans WHERE guildid = ? AND userid = ?', [message.guild.id, user.id], (error, row) => {
-        if (error) {
-            message.channel.send('Something went wrong when quering the database. Unable to process request.');
-            console.log(error);
-            if (error && error.fatal) {
-                database = sql.createConnection({
-                    host: '127.0.0.1',
-                    user: 'root',
-                    database: 'arsbot'
-                });
-            }
-        } else if (row.length > 0) {
-            database.query(`UPDATE bans SET bancount = ${row[0].bancount + 1} WHERE userid = "${user.id}" AND guildid = ${message.guild.id}`);
+    knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
+        if (count.length > 0) {
+            knexDB.update({
+                bancount: parseInt(count[0].bancount, 10) + 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+            .catch(console.error);
         } else {
-            database.query('INSERT INTO bans (userid, bancount, guildid) VALUES (?, ?, ?)', [user.id, 1, message.guild.id]);
+            knexDB.insert({
+                userid: user.id,
+                guildid: message.guild.id,
+                bancount: 1
+            }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
+
+            })
+              .catch(console.error);
         }
     });
 };

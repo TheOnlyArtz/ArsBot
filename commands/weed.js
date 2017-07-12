@@ -92,7 +92,7 @@ exports.run = async (client, message, args) => {
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
                     })
-                    .catch(console.error)
+                    .catch(console.error);
                 }
             });
         });
@@ -170,7 +170,7 @@ exports.run = async (client, message, args) => {
                         level: 'PurpleKush'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error)
+                    }).catch(console.error);
                 }
             })
             .catch(console.error);

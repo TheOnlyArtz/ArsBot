@@ -52,7 +52,7 @@ exports.run = (client, message) => {
       Dont allow self punish
     */
     if (message.author.id === user.id) {
-      return message.reply("You cant punish yourself :wink:")
+        return message.reply('You cant punish yourself :wink:');
     }
 
     /*

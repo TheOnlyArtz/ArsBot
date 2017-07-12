@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
     }
     if (message.author.id === user.id) {
-      return message.reply("You cant punish yourself :wink:")
+        return message.reply('You cant punish yourself :wink:');
     }
     if (message.mentions.users.size < 1) {
         return message.reply('You need to mention someone to SoftBan him!.').then(message => message.delete(2000));

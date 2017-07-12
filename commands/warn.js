@@ -27,7 +27,7 @@ exports.run = (client, message, args) => {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
     }
     if (message.author.id === user.id) {
-      return message.reply("You cant punish yourself :wink:")
+        return message.reply('You cant punish yourself :wink:');
     }
     if (!user) {
         return message.reply('You must mention someone to warn him. **Usage:**`~warn [@mention] [example]`');
@@ -45,7 +45,7 @@ exports.run = (client, message, args) => {
             modlog.send({embed})
       .catch(console.error);
             member.send(`You've got warned **Once** \n State Reason: ${reason}`)
-            .catch(console.error)
+            .catch(console.error);
         } else if (member.nickname.includes('(1)')) {
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
@@ -55,13 +55,13 @@ exports.run = (client, message, args) => {
       .catch(console.error);
             member.setNickname(`${user.username}(2)`);
             member.send(`You've got warned **Twice** next time **BAN** \n State Reason: ${reason}`)
-            .catch(console.error)
+            .catch(console.error);
         } else if (member.nickname.includes('(2)')) {
       // Message.guild.member(user).addRole(muteRole).then(() =>{
             member.setNickname(`${user.username}(BanQueue)`);
             member.send('You will get banned soon with the reason, thank you!');
             message.author.send('The member has been already warned 2 times, and cannot get another warn I have to ban them')
-            .catch(console.error)
+            .catch(console.error);
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
         .setTimestamp()

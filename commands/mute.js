@@ -37,7 +37,7 @@ exports.run = (client, message) => {
         return message.reply('You need to mention someone to Mute him!.');
     }
     if (message.author.id === user.id) {
-      return message.reply("You cant punish yourself :wink:")
+        return message.reply('You cant punish yourself :wink:');
     }
     if (!time) {
         return message.reply('specify the time for the mute!**Usage:**`~mute [@mention] [1m] [example]`');

@@ -15,7 +15,7 @@ exports.run = (client, message) => {
     if (!unshortLink) {
         return message.reply('You must give a shorten link so the bot can fetch the information\n and the originl LINK!');
     }
-    if (!unshortLink.includes('https://goo.gl') && !unshortLink.includes('http://bit.ly')) {
+    if (!unshortLink.includes('https://goo.gl') && !unshortLink.includes('http://bit.ly') && !unshortLink.includes('http://goo.gl')) {
         return message.reply(`Did not detect a ${platform} link!`);
     }
     if (message.content.startsWith('~unshorten ' + 'google')) {

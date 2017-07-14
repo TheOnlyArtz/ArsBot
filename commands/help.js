@@ -43,6 +43,7 @@ exports.run = function (client, message) {
 **~mute** Mutes a mentioned user\n\
 **~warn** Warns a mentioned user and let you ban him after 3 warnings\n\
 **~softban** Softban a mentioned user\n\
+**~prune** Kick players that are inactive [days you choose]\n\
 **~purge** How messages should I delete for you?\n\
 **~unmute** Unmutes a mentioned user')
 .addField('Game Stats', '**~ow** Check your OverWatch statistics!');

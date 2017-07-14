@@ -149,6 +149,9 @@ client.on("guildCreate", guild => {
 });
 
 client.on("guildDelete", guild => {
+  client.channels.get("315129822571528193").edit({
+      name: `${client.guilds.size}-Servers`
+    })
   //Whenever a guild remove the bot send a message to the "server-log"
   const cnl = client.channels.get("315129822571528193");
   cnl.send(`**I've left ${guild.name} :rofl:**`);

@@ -33,6 +33,11 @@ exports.run = (client, message) => {
     if (!modlog) {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
     }
+
+    if (!muteRole) {
+        return message.reply("`Please create a role called \"muted\"`")
+    }
+
     if (message.mentions.users.size < 1) {
         return message.reply('You need to mention someone to Mute him!.');
     }

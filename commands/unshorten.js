@@ -29,7 +29,7 @@ exports.run = (client, message) => {
             message.channel.send({
                 embed: google
             })
-      .catch(console.error);
+      .catch(e => logger.error(e));
         }).catch(err => {
             console.error(err);
         });
@@ -46,7 +46,7 @@ exports.run = (client, message) => {
             message.channel.send({
                 embed: bitly
             })
-      .catch(console.error);
+      .catch(e => logger.error(e));
         }).catch(err => {
             console.error(err);
         });

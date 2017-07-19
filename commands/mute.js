@@ -20,7 +20,7 @@ exports.run = (client, message) => {
     }
 
     if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) {
-        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(e => logger.error(e));
     }
     let reason = message.content.split(' ').slice(3).join(' ');
     let time = message.content.split(' ')[2];
@@ -35,7 +35,7 @@ exports.run = (client, message) => {
     }
 
     if (!muteRole) {
-        return message.reply("`Please create a role called \"muted\"`")
+        return message.reply('`Please create a role called "muted"`');
     }
 
     if (message.mentions.users.size < 1) {
@@ -59,10 +59,10 @@ exports.run = (client, message) => {
     if (reason.length < 1) {
         return message.reply('You must give me a reason for Mute');
     }
-    message.guild.member(user).addRole(muteRole).catch(console.error);
+    message.guild.member(user).addRole(muteRole).catch(e => logger.error(e));
 
     setTimeout(() => {
-        message.guild.member(user).removeRole(muteRole).catch(console.error);
+        message.guild.member(user).removeRole(muteRole).catch(e => logger.error(e));
     }, ms(time));
     message.guild.channels.filter(textchannel => textchannel.type === 'text').forEach(cnl => {
         cnl.overwritePermissions(muteRole, {
@@ -75,7 +75,7 @@ exports.run = (client, message) => {
 .setTimestamp()
 .addField('Mute', `**Muted:**${user.username}#${user.discriminator}\n**Moderator:** ${message.author.username}\n**Duration:** ${ms(ms(time), {long: true})}\n**Reason:** ${reason}`);
     modlog.send({embed})
-  .catch(console.error);
+  .catch(e => logger.error(e));
 
     knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
         if (count.length > 0) {
@@ -84,7 +84,7 @@ exports.run = (client, message) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         } else {
             knexDB.insert({
                 userid: user.id,
@@ -93,7 +93,7 @@ exports.run = (client, message) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-              .catch(console.error);
+              .catch(e => logger.error(e));
         }
     });
 };

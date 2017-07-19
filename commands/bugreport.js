@@ -33,7 +33,7 @@ exports.run = (client, message) => {
   .setThumbnail(message.author.displayAvatarURL)
   .setColor(16711728);
     cnl.send({embed})
-  .catch(console.error);
+  .catch(e => logger.error(e))
 // In your command
 };
 

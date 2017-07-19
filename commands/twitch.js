@@ -18,7 +18,7 @@ exports.run = (client, message, args) => {
               return res.json();
           }).then(json2 => {
               if (json.status === 404) {
-                  return message.reply('Channel: ' + arg + '**does not exist**.').catch(console.error);
+                  return message.reply('Channel: ' + arg + '**does not exist**.').catch(e => logger.error(e));
               }
               const embed = new Discord.RichEmbed()
               .addField('Name', json.name, true)
@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
               .setThumbnail(json.logo);
 
               message.channel.send({embed})
-            .catch(console.error);
+            .catch(e => logger.error(e));
           }).catch(err => {
               if (err) {
                   console.log(err);

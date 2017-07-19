@@ -47,7 +47,7 @@ exports.run = function (client, message) {
 **~purge** How messages should I delete for you?\n\
 **~unmute** Unmutes a mentioned user')
 .addField('Game Stats', '**~ow** Check your OverWatch statistics!');
-    message.author.send({embed}).catch(console.erro);
+    message.author.send({embed}).catch(e => logger.error(e));
 
     knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(l => {
         if (!l[0]) {
@@ -75,7 +75,7 @@ exports.run = function (client, message) {
     **~weed smoke** Smoke some weed for 15 grams\n\
     **~weed bet** Guess number from 1-5 and bet one some weed price = 5x\n\
     **~weed donate** Donate a mentioned user some weed. Poor little guy\n**weed top10** check the leaderboards!');
-        message.author.send({embed: econ}).catch(console.error);
+        message.author.send({embed: econ}).catch(e => logger.error(e));
     });
 
     knexDB.from('weedbank').where('guildid', message.guild.id).andWhere('userid', message.guild.ownerID).then(l => {
@@ -98,7 +98,7 @@ exports.run = function (client, message) {
       .addField('Economy Commands v1.2.5 UPDATED', '**~economy enable** `Server owner only` Enable economy mode!\n **~economy disable** `Server owner only` Disable economy mode\n**weed top10** check the leaderboards!\n**~weed bank** Shows you how much weed you have\n**~weed smoke** Smoke some weed for 15 grams\n **~weed bet** Guess number from 1-5 and bet one some weed price = 5x\n**~weed donate** Donate a mentioned user some weed. Poor little guy\n **~weed help** Shows you the economy commands')
       .addField('Farm Upgrading Commands v1.2.5 UPDATED', '**~weed upgrade menu** Shows you the `upgrading` menu including price and info\n**~weed upgrade medium** Upgrade to the **medium** farm level\n**~weed upgrade advanced** Upgrade to the **advanced** farm level\n**~weed upgrade smart** Upgrade to the **smart** farm level')
       .setColor(27648);
-            message.author.send({embed: economy}).catch(console.error);
+            message.author.send({embed: economy}).catch(e => logger.error(e));
         }
     });
 };

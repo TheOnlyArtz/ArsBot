@@ -9,7 +9,7 @@ exports.run = function (client, message) {
         const embed = new Discord.RichEmbed()
     .setAuthor('A smart guy said once:', 'http://pngimages.net/sites/default/files/right-double-quotation-mark-png-image-80280.png')
     .addField('Quote With Source', `"${quote.body.quoteText}"\n**Author:** ${quote.body.quoteAuthor}\n**Source:** ${quote.body.quoteLink}`);
-        message.channel.send({embed}).catch(console.error);
+        message.channel.send({embed}).catch(e => logger.error(e));
     }).catch(err => {
         if (err) {
             message.channel.send('OOPS... something went wrong');

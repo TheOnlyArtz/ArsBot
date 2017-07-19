@@ -23,7 +23,7 @@ exports.run = (client, message, args) => {
     .addField('Example:', `${exam}`)
     .addField('Rating', `:thumbsup: ${thumup} :thumbsdown: ${thumdown}`, true)
     .setThumbnail('https://pbs.twimg.com/profile_images/3518201800/3ddffc081e6999872a2e5e05fa59cd3a_400x400.jpeg');
-        message.channel.send({embed}).catch(console.error);
+        message.channel.send({embed}).catch(e => logger.error(e));
     }).catch(err => {
         if (err) {
             console.log(err);

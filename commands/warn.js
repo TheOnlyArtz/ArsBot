@@ -14,11 +14,11 @@ const knexDB = require('knex')({
 
 exports.run = (client, message, args) => {
     if (!message.guild.member(message.author).hasPermission('MANAGE_NICKNAMES')) {
-        return message.reply(':lock: You need to have `MANAGE_NICKNAMES` Permission to execute `warn`').catch(console.error);
+        return message.reply(':lock: You need to have `MANAGE_NICKNAMES` Permission to execute `warn`').catch(e => logger.error(e));
     }
 
     if (!message.guild.member(client.user).hasPermission('MANAGE_NICKNAMES')) {
-        return message.reply(':lock: **I** need `MANAGE_NICKNAMES` Permissions to execute `warn`').catch(console.error);
+        return message.reply(':lock: **I** need `MANAGE_NICKNAMES` Permissions to execute `warn`').catch(e => logger.error(e));
     }
     let user = message.mentions.users.first();
     let reason = message.content.split(' ').slice(1).join(' ').replace(/<@!?\d+>/, '');
@@ -43,33 +43,33 @@ exports.run = (client, message, args) => {
         .setTimestamp()
         .addField('Action Warn #1:', `**User:** ${user.tag}\n**Reason:** ${reason}`);
             modlog.send({embed})
-      .catch(console.error);
+      .catch(e => logger.error(e));
             member.send(`You've got warned **Once** \n State Reason: ${reason}`)
-            .catch(console.error);
+            .catch(e => logger.error(e));
         } else if (member.nickname.includes('(1)')) {
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
         .setTimestamp()
         .addField('Action Warn #2:', `**User:** ${user.tag}\n**Reason:** ${reason}`);
             modlog.send({embed})
-      .catch(console.error);
+      .catch(e => logger.error(e));
             member.setNickname(`${user.username}(2)`);
             member.send(`You've got warned **Twice** next time **BAN** \n State Reason: ${reason}`)
-            .catch(console.error);
+            .catch(e => logger.error(e));
         } else if (member.nickname.includes('(2)')) {
       // Message.guild.member(user).addRole(muteRole).then(() =>{
             member.setNickname(`${user.username}(BanQueue)`);
             member.send('You will get banned soon with the reason, thank you!');
             message.author.send('The member has been already warned 2 times, and cannot get another warn I have to ban them')
-            .catch(console.error);
+            .catch(e => logger.error(e));
             const embed = new Discord.RichEmbed()
         .setColor(0x00FE86)
         .setTimestamp()
         .addField('Action Warn #3:', `**User:** ${user.tag}\n**Reason:** ${reason}`);
             modlog.send({embed})
-      .catch(console.error);
+      .catch(e => logger.error(e));
             message.guild.member(user).ban(user, 7)
-      .catch(console.error);
+      .catch(e => logger.error(e));
         }
 
         knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
@@ -79,7 +79,7 @@ exports.run = (client, message, args) => {
                 }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
                 })
-                .catch(console.error);
+                .catch(e => logger.error(e));
             } else {
                 knexDB.insert({
                     userid: user.id,
@@ -88,7 +88,7 @@ exports.run = (client, message, args) => {
                 }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
                 })
-                  .catch(console.error);
+                  .catch(e => logger.error(e));
             }
         });
     });

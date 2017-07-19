@@ -7,7 +7,7 @@ exports.run = function (client, message) {
         const embed = new Discord.RichEmbed()
     .setImage(`${photo.body.url}`);
         message.channel.send({embed})
-    .catch(console.error);
+    .catch(e => logger.error(e));
     }).catch(err => {
         if (err) {
             message.channel.send('OOPS... something went wrong');

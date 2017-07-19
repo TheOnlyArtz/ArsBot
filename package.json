@@ -10,20 +10,20 @@
     "space": 4,
     "semicolon": true,
     "rules": {
-        "camelcase": 0,
-        "new-parens": 0,
-        "guard-for-in": 0,
-        "prefer-const": 0,
-        "no-eval": 0,
-        "no-unused-vars": 0,
-        "no-prototype-builtins": 0,
-        "unicorn/filename-case": 0,
-        "import/no-dynamic-require": 0
+      "camelcase": 0,
+      "new-parens": 0,
+      "guard-for-in": 0,
+      "prefer-const": 0,
+      "no-eval": 0,
+      "no-unused-vars": 0,
+      "no-prototype-builtins": 0,
+      "unicorn/filename-case": 0,
+      "import/no-dynamic-require": 0
     },
     "ignores": [
-        "tests/**"
+      "tests/**"
     ]
-},
+  },
   "author": "TheOnlyArtz",
   "license": "MIT",
   "dependencies": {
@@ -47,6 +47,7 @@
     "respawn": "^2.5.0",
     "snekfetch": "^3.1.11",
     "sqlite": "^2.8.0",
+    "winston": "^2.3.1",
     "ytdl-core": "^0.14.4"
   },
   "devDependencies": {

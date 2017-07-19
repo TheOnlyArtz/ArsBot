@@ -34,7 +34,7 @@ exports.run = (client, message, args) => {
     const embed = new Discord.RichEmbed()
   .setAuthor(`8ball`, 'http://8ballsportsbar.com/wp-content/uploads/2016/02/2000px-8_ball_icon.svg_.png')
   .addField('Info:', `**Your Question:** ${args}\n**My Prediction:** ${answers[~~(Math.random() * answers.length)]}`);
-    message.channel.send({embed}).catch(console.error);
+    message.channel.send({embed}).catch(e => logger.error(e))
 };
 module.exports.help = {
     name: '8ball'

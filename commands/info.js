@@ -28,7 +28,7 @@ exports.run = (client, message) => {
       // .addField("Server Icon", "[click here](" + message.guild.iconURL() + ")", true)
       // .addField("Security", message.guild.verificationLevel, true)
       // .addField("Roles", message.guild.roles.map(r => r.size));
-    message.channel.send({embed}).catch(console.error);
+    message.channel.send({embed}).catch(e => logger.error(e));
 };
 module.exports.help = {
     name: 'info'

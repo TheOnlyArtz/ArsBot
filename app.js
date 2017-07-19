@@ -13,6 +13,11 @@ const package = require("./package.json")
 const mysql = require("mysql");
 const fetch = require("snekfetch");
 const sql = require("sqlite");
+const winstonLogger = require('./classes/logger.js')
+
+const winstonClass = new winstonLogger
+global.logger = winstonClass.logger
+
 sql.open("./localDBs/announcehey.sqlite")
 const cooldown = new Set();
 const maintance = {
@@ -39,9 +44,10 @@ client.on("ready", () => {
     knexDB.from('weedbank').where("agree", "true").then(async err => {
 
     })
-    .catch(console.error, "ERROR")
+    .catch(e => {
+      logger.error(e)
+    })
   }, 8000);
-  console.log(chalk.gray.underline.bold(`[${time}] - {${__filename}}: `));
   setInterval(() => {
     var answers = [
       `${client.guilds.size} Servers`,
@@ -61,7 +67,7 @@ client.on("ready", () => {
 
   }, (100000))
   const snekfetch = require('snekfetch')
-  console.log("I\'m Online!");
+  logger.info("I\'m Online!");
 });
 
 /*
@@ -74,19 +80,19 @@ To different files
 client.commands = new Discord.Collection();
 
 fs.readdir("./commands/", (err, files) => {
-  if (err) console.error(err);
+  if (err) logger.error(err);
   let jsfiles = files.filter(f => f.split(".").pop() === "js");
   if (jsfiles.length <= 0) {
-    console.log("No commands to load!");
+    logger.info("No commands to load!");
     return;
   }
-  console.log(`Loading ${jsfiles.length} commands!`);
+  logger.info(`Loading ${jsfiles.length} commands!`);
 
 
   //Loop through all the files and load them
   jsfiles.forEach((f, i) => {
     let props = require(`./commands/${f}`);
-    console.log(`${i + 1}: ${f} loaded`);
+    logger.info(`${i + 1}: ${f} loaded`);
     client.commands.set(props.help.name, props)
   });
 });
@@ -98,11 +104,15 @@ client.on("guildCreate", guild => {
   client.channels.get("315129822571528193").edit({
       name: `${client.guilds.size}-Servers`
     })
-    .catch(console.error);
+    .catch(e => {
+      logger.error(e)
+    })
   guild.createChannel("mod-log", "text").then(channel => channel.overwritePermissions(guild.id, {
       SEND_MESSAGES: false
     }))
-    .catch(console.error)
+    .catch(e => {
+      logger.error(e)
+    })
   /*
   Sends a "greeting" message that explains quickly on the bot
   */
@@ -124,9 +134,15 @@ client.on("guildCreate", guild => {
         .setTimestamp();
       cnl.send({
         embed
-      }).catch(console.error)
+      }).catch(e => {
+        logger.error(e)
+      })
+
     })
-    .catch(console.error)
+    .catch(e => {
+      logger.error(e)
+    })
+
   //Create a role called "muted" for the "mute" command
   guild.createRole({
       data: {
@@ -137,15 +153,17 @@ client.on("guildCreate", guild => {
       reason: 'we needed a role for muted',
     })
 
-    .then(role => console.log(`Created role ${role}`))
-    .catch(console.error)
+    .then(role => logger.info(`Created role ${role}`))
+    .catch(e => {
+      logger.error(e)
+    })
   //Post the serverAmount inside discordbots.org/api/bots/ID/stats
   fetch.post(`https://discordbots.org/api/bots/${client.user.id}/stats`)
     .set('Authorization', settings.dbotsAPI)
     .send({
       server_count: client.guilds.size
     })
-    .then(console.log('Updated dbots.org status.'));
+    .then(logger.info('Updated dbots.org status.'));
 });
 
 client.on("guildDelete", guild => {
@@ -155,7 +173,7 @@ client.on("guildDelete", guild => {
   //Whenever a guild remove the bot send a message to the "server-log"
   const cnl = client.channels.get("315129822571528193");
   cnl.send(`**I've left ${guild.name} :rofl:**`);
-  console.log(`I have left ${guild.name} at ${new Date()}`);
+  logger.info(`I have left ${guild.name} at ${new Date()}`);
 });
 
 client.on("guildMemberAdd", member => {
@@ -172,7 +190,7 @@ client.on("guildMemberAdd", member => {
     }
   }).catch(function(err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
     }
   })
 });
@@ -193,13 +211,13 @@ client.on("guildMemberRemove", member => {
 
   }).catch(function(err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
     }
   })
 });
 
 process.on('unhaldedRejection', (reason, p) => {
-  console.error()
+  logger.error(reason)
 });
 
 
@@ -234,7 +252,9 @@ client.on("message", async(message) => {
         }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
 
         })
-        .catch(console.error)
+        .catch(e => {
+          logger.error(e)
+        })
 
       } else {
         if (!l[0]) return;
@@ -283,18 +303,20 @@ client.on("message", async(message) => {
         }).into('weedbank').where('guildid', message.guild.id).andWhere("userid", message.author.id).then(() => {
 
         })
-        .catch(console.error)
+        .catch(e => {
+          logger.error(e)
+        })
 
 
 
       }
     }).catch(function(err) {
       //handle any error and deal with it
-      console.error(err);
+      logger.error(err);
     })
   }).catch(function(err) {
     //handle any error and deal with it
-    console.error(err);
+    logger.error(err);
   });
 
 
@@ -303,7 +325,13 @@ client.on("message", async(message) => {
   if (!command.startsWith(prefix)) return;
   let cmd = client.commands.get(command.slice(prefix.length));
   //runs the command handler
-  if (cmd) cmd.run(client, message, args);
+  if (cmd)
+  try {
+    cmd.run(client, message, args);
+    logger.info(`${chalk.cyan(cmd.help.name)} just been executed by ${chalk.magenta(message.author.username)} inside ${chalk.yellow(message.guild.name)}`)
+  } catch (e) {
+    logger.error(e);
+  }
 });
 
 client.login(settings.token);

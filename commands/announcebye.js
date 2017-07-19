@@ -18,7 +18,7 @@ exports.run = function (client, message) {
     Checks if author has permissions
     */
     if (!message.guild.member(message.author).hasPermission('ADMINISTRATOR')) {
-        return message.reply(':lock: You dont have permissions for that').catch(console.error);
+        return message.reply(':lock: You dont have permissions for that').catch(e => logger.error(e))
     }
     /*
     Checks if message was supplied

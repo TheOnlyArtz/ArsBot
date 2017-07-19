@@ -20,10 +20,10 @@ exports.run = (client, message, args) => {
     let modlog = message.guild.channels.find('name', 'mod-log');
     let user = message.mentions.users.first();
     if (!message.guild.member(message.author).hasPermission('BAN_MEMBERS')) {
-        return message.reply(':lock: You need to have `BAN_MEMBERS` Permission to execute `SoftBan`').catch(console.error);
+        return message.reply(':lock: You need to have `BAN_MEMBERS` Permission to execute `SoftBan`').catch(e => logger.error(e));
     }
     if (!message.guild.member(client.user).hasPermission('BAN_MEMBERS')) {
-        return message.reply(':lock: I need to have `BAN_MEMBERS` Permission to execute `SoftBan`').catch(console.error);
+        return message.reply(':lock: I need to have `BAN_MEMBERS` Permission to execute `SoftBan`').catch(e => logger.error(e));
     }
     if (!modlog) {
         return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
     }
     user.send(`You've just got softbanned from ${guild.name}  \n State reason: **${reason}** \n **Disclamer**: In a softban you can come back straight away, we just got your messages deleted`);
     console.log(`${user.username} has been softbanned by ${message.author.username} for ${reason} in ${guild.name}`);
-    message.guild.ban(user, 2).catch(console.error);
+    message.guild.ban(user, 2).catch(e => logger.error(e));
     setTimeout(() => {
         message.guild.unban(user.id);
     }, 0);
@@ -48,7 +48,7 @@ exports.run = (client, message, args) => {
 .setTimestamp()
 .addField('SoftBan:', `**Softbanned:** ${user.username}#${user.discriminator}\n**Moderator:** ${message.author.username}\n**Reason:** ${reason}`);
     modlog.send({embed})
-  .catch(console.error);
+  .catch(e => logger.error(e));
 
     knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
         if (count.length > 0) {
@@ -57,7 +57,7 @@ exports.run = (client, message, args) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         } else {
             knexDB.insert({
                 userid: user.id,
@@ -66,7 +66,7 @@ exports.run = (client, message, args) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-              .catch(console.error);
+              .catch(e => logger.error(e));
         }
     });
 };

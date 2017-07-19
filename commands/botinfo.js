@@ -39,7 +39,7 @@ exports.run = (client, message) => {
     .addField("Guilds Overall", client.guilds.size, true);
   message.channel.send({
     embed
-  }).catch(console.error)
+  }).catch(e => logger.error(e))
 };
 
 module.exports.help = {

@@ -20,7 +20,7 @@ exports.run = (client, message) => {
      .setTitle(`Prune by ${message.author.username}`, message.author.displayAvatarURL)
    .setDescription(`Pruned ${pruned} members with the agreement of ${message.author.tag}`);
          client.guilds.get(message.guild.id).channels.find('name', 'mod-log').send({embed})
-      .catch(console.error);
+      .catch(e => logger.error(e));
      })
    .catch(e => {
        console.log(e);

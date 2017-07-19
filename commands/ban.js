@@ -28,57 +28,57 @@ exports.run = (client, message) => {
     */
 
     if (!message.guild.member(message.author).hasPermission('BAN_MEMBERS')) {
-        return message.reply(':lock: **You** need `BAN_MEMBERS` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **You** need `BAN_MEMBERS` Permissions to execute `mute`').catch(e => logger.error(e))
     }
     /*
       Checks for the bot's permissions
     */
     if (!message.guild.member(client.user).hasPermission('BAN_MEMBERS')) {
-        return message.reply(':lock: **I** need `BAN_MEMBERS` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **I** need `BAN_MEMBERS` Permissions to execute `mute`').catch(e => logger.error(e))
     }
     /*
       Checks if modlog channel exists
     */
     if (!modlog) {
-        return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one');
+        return message.reply('I need a text channel named `mod-log` to print my ban/kick logs in, please create one').catch(e => logger.error(e))
     }
     /*
       Check if a mention found
     */
     if (message.mentions.users.size < 1) {
-        return message.reply('You need to mention someone to Ban him!.');
+        return message.reply('You need to mention someone to Ban him!.').catch(e => logger.error(e))
     }
     /*
       Dont allow self punish
     */
     if (message.author.id === user.id) {
-        return message.reply('You cant punish yourself :wink:');
+        return message.reply('You cant punish yourself :wink:').catch(e => logger.error(e))
     }
 
     /*
       Checks if time was supplied
     */
     if (!time) {
-        return message.reply(`How much time ? **Usage:**\`~ban [@mention] [1d] [example]\``);
+        return message.reply(`How much time ? **Usage:**\`~ban [@mention] [1d] [example]\``).catch(e => logger.error(e))
     }
     /*
       Checking if the time is valid
     */
     if (!time.match(/[1-7][s,m,h,d,w]/g)) {
-        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**`~mute [@mention] [1m] [example]`');
+        return message.reply('I need a valid time ! look at the Usage! right here: **Usage:**`~mute [@mention] [1m] [example]`').catch(e => logger.error(e))
     }
     /*
       Checking if reason was supplied
     */
     if (!reason) {
-        return message.reply(`You must give me a reason for the ban **Usage:**\`~ban [@mention] [1d] [example]\``);
+        return message.reply(`You must give me a reason for the ban **Usage:**\`~ban [@mention] [1d] [example]\``).catch(e => logger.error(e))
     }
     /*
       Checks if user is bannable
     */
 
     if (!message.guild.member(user).bannable) {
-        return message.reply('This member is above me in the `role chain` Can\'t ban him');
+        return message.reply('This member is above me in the `role chain` Can\'t ban him').catch(e => logger.error(e))
     }
     /*
       Sends a DM to the user who's getting banned
@@ -88,14 +88,14 @@ exports.run = (client, message) => {
     setTimeout(() => {
         message.guild.unban(user.id);
     }, ms(time));
-    console.log(`${user.username} has been banned by ${message.author.username} for ${reason} in ${guild.name}`);
+    logger.info(`${user.username} has been banned by ${message.author.username} for ${reason} in ${guild.name}`)
     const embed = new Discord.RichEmbed()
     .setColor(0x73FE43)
     .setTimestamp()
     .addField('Ban:', `**Banned:** ${user.username}#${user.discriminator}\n**Moderator** ${message.author.username} \n**Duration** ${ms(ms(time), {long: true})} \n**Reason** ${reason}`);
     modlog.send({
         embed
-    }).catch(console.error);
+    }).catch(e => logger.error(e))
     /*
       Query the database and update the history table
     */
@@ -106,7 +106,7 @@ exports.run = (client, message) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-            .catch(console.error);
+            .catch(e => logger.error(e))
         } else {
             knexDB.insert({
                 userid: user.id,
@@ -115,7 +115,7 @@ exports.run = (client, message) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-              .catch(console.error);
+              .catch(e => logger.error(e))
         }
     });
 };

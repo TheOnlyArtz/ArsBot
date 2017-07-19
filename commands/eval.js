@@ -55,7 +55,7 @@ exports.run = (client, message) => {
         .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`, `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`);
             msg.edit({
                 embed: evalcode
-            }).catch(console.error);
+            }).catch(e => logger.error(e));
         } catch (err) {
             let errorcode = new Discord.RichEmbed()
         .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
@@ -65,7 +65,7 @@ exports.run = (client, message) => {
         .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `, `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`);
             msg.edit({
                 embed: errorcode
-            }).catch(console.error);
+            }).catch(e => logger.error(e));
         }
     });
 };

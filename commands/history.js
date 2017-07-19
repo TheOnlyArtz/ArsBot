@@ -27,10 +27,10 @@ exports.run = (client, message) => {
             const embed = new Discord.RichEmbed()
         .addField(`History for ${user.username} inside ${message.guild.name}`, 'bans: 0\nkicks: 0\nmutes: 0\nsoftbans: 0\nwarns : 0');
             message.channel.send({embed})
-        .catch(console.error);
+        .catch(e => logger.error(e));
         }
     })
-    .catch(console.error);
+    .catch(e => logger.error(e));
 };
 module.exports.help = {
     name: 'history'

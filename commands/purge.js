@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
 
     if (!message.guild.member(message.author).hasPermission('MANAGE_MESSAGES')) {
         return message.reply(':lock: **You** Need `MANAGE_MESSAGES` Permission to execute `purge`')
-      .catch(console.error);
+      .catch(e => logger.error(e));
     }
     let messagecount = parseInt(args.join(' '));
  /*
@@ -36,7 +36,7 @@ exports.run = (client, message, args) => {
   // Message.reply(`You've succefully deleted \`${messagecount} Messages!\``).then(m => {
   //   m.delete(2000)
   // })
-  .catch(console.error);
+  .catch(e => logger.error(e));
 };
 module.exports.help = {
     name: 'purge'

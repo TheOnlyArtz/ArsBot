@@ -7,10 +7,10 @@ exports.run = (client, message) => {
     let reason = args;
     message.delete(1000);
     if (!message.guild.member(message.author).hasPermission('MANAGE_ROLES')) {
-        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(e => logger.error(e));
     }
     if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) {
-        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **I** need `MANAGE_ROLES` Permissions to execute `mute`').catch(e => logger.error(e));
     }
     let user = message.mentions.users.first();
     let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');

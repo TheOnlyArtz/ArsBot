@@ -14,10 +14,10 @@ const knexDB = require('knex')({
 
 exports.run = (client, message, args) => {
     if (!message.guild.member(message.author).hasPermission('KICK_MEMBERS')) {
-        return message.reply(':lock: You dont have permissions for that').catch(console.error);
+        return message.reply(':lock: You dont have permissions for that').catch(e => logger.error(e));
     }
     if (!message.guild.member(client.user).hasPermission('KICK_MEMBERS')) {
-        return message.reply(':lock: **I** need `KICK_MEMBERS` Permissions to execute `mute`').catch(console.error);
+        return message.reply(':lock: **I** need `KICK_MEMBERS` Permissions to execute `mute`').catch(e => logger.error(e));
     }
     let user = message.mentions.users.first();
     let reason = message.content.split(' ').slice(2).join(' ');
@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
     .setColor(10433245)
     .setTimestamp()
     .addField('Kick:', `**Kicked**${user.username}#${user.discriminator}\n**Moderator** ${message.author.username} \n**Reason** ${reason}`);
-    modlog.send({embed}).catch(console.error);
+    modlog.send({embed}).catch(e => logger.error(e));
 
     knexDB.from('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(count => {
         if (count.length > 0) {
@@ -51,7 +51,7 @@ exports.run = (client, message, args) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         } else {
             knexDB.insert({
                 userid: user.id,
@@ -60,7 +60,7 @@ exports.run = (client, message, args) => {
             }).into('bans').where('guildid', message.guild.id).andWhere('userid', user.id).then(() => {
 
             })
-              .catch(console.error);
+              .catch(e => logger.error(e));
         }
     });
 };

@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
         `~weed upgrade <farmname>`\n\
         And No dont type the name inside <> cause it wont work');
                 message.channel.send({embed: upgradembed})
-        .catch(console.error);
+        .catch(e => logger.error(e));
             }).catch(err => {
                 console.error(err);
             });
@@ -92,7 +92,7 @@ exports.run = async (client, message, args) => {
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
                     })
-                    .catch(console.error);
+                    .catch(e => logger.error(e));
                 }
             });
         });
@@ -130,12 +130,12 @@ exports.run = async (client, message, args) => {
                         level: 'BlueBerry'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // PurpleKush
@@ -170,12 +170,12 @@ exports.run = async (client, message, args) => {
                         level: 'PurpleKush'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-          .catch(console.error);
+          .catch(e => logger.error(e));
     }
 
 // BlueDream
@@ -209,12 +209,12 @@ exports.run = async (client, message, args) => {
                         level: 'BlueDream'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // OG kush
@@ -247,12 +247,12 @@ exports.run = async (client, message, args) => {
                         level: 'OgKush'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // GreenCrack
@@ -284,12 +284,12 @@ exports.run = async (client, message, args) => {
                         level: 'greenCrack'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // SourDiesel
@@ -321,12 +321,12 @@ exports.run = async (client, message, args) => {
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
                     })
-                    .catch(console.error);
+                    .catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // JackHerer
@@ -357,12 +357,12 @@ exports.run = async (client, message, args) => {
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
                     })
-                    .catch(console.error);
+                    .catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
 // LemonHaze
@@ -386,12 +386,12 @@ exports.run = async (client, message, args) => {
                         level: 'lemonHaze'
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
 
-                    }).catch(console.error);
+                    }).catch(e => logger.error(e));
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
   // Bank command.
@@ -526,9 +526,9 @@ exports.run = async (client, message, args) => {
                     });
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
   // Bet command
@@ -574,7 +574,7 @@ exports.run = async (client, message, args) => {
                     if (Number(guess) !== final) {
                         const embed = new Discord.RichEmbed()
             .addField('Bet Info:', `**Amount:** ${deposit} Grams\n**Multiplier:** 5x\n*BetStatus:* **[LOST]**\n**To The Bank:** **-**${deposit} Grams of weed!`);
-                        await message.channel.send({embed}).then(m => m.react('❌')).catch(console.error);
+                        await message.channel.send({embed}).then(m => m.react('❌')).catch(e => logger.error(e));
                         knexDB.update({
                             weedamount: (row[0].weedamount - deposit)
                         }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
@@ -585,7 +585,7 @@ exports.run = async (client, message, args) => {
             .addField('Bet Info:', `**Amount:** ${deposit} Grams\n**Multiplier:** 5x\n*BetStatus:* **[WIN]**\n**To The Bank:** **+**${deposit * 5} Grams of weed!`);
                         await message.channel.send({embed})
             .then(m => m.react('🏆'))
-            .catch(console.error);
+            .catch(e => logger.error(e));
                         knexDB.update({
                             weedamount: (row[0].weedamount + (5 * deposit))
                         }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
@@ -594,9 +594,9 @@ exports.run = async (client, message, args) => {
                     }
                 }
             })
-            .catch(console.error);
+            .catch(e => logger.error(e));
         })
-        .catch(console.error);
+        .catch(e => logger.error(e));
     }
 
   // Donate command
@@ -685,7 +685,7 @@ exports.run = async (client, message, args) => {
            .setColor(stat)
            .setFooter(`TOP 10 for ${message.guild.name}`, message.guild.iconURL());
                     await message.channel.send({embed})
-           .catch(console.error);
+           .catch(e => logger.error(e));
                 });
             });
         } else {
@@ -699,7 +699,7 @@ exports.run = async (client, message, args) => {
              `)
              .setColor(stat)
              .setFooter(`TOP 10 globally`, client.user.DisplayAvatarURL);
-                await message.channel.send({embed}).catch(console.error);
+                await message.channel.send({embed}).catch(e => logger.error(e));
             });
         }
     }
@@ -719,7 +719,7 @@ exports.run = async (client, message, args) => {
      .addField('Economy Commands v5.1.5 UPDATED', '**~economy enable** `Server owner only` Enable economy mode!\n **~economy disable** `Server owner only` Disable economy mode\n**~weed sell** Sell your weed for money and buy new farms!\n**~weed bank** Shows you how much weed you have\n**~weed smoke** Smoke some weed for 15 grams\n **~weed bet** Guess number from 1-5 and bet one some weed price = 5x\n**~weed donate** Donate a mentioned user some weed. Poor little guy\n **~weed help** Shows you the economy commands')
      .addField('Farm Upgrading Commands v5.6.1 UPDATED', '**~weed upgrade menu** Shows you the `upgrading` menu including price and info\n**~weed upgrade <farmname>** Upgrade your farm to whatever you want')
      .setColor(27648);
-            await message.author.send({embed: economy}).catch(console.error);
+            await message.author.send({embed: economy}).catch(e => logger.error(e));
         });
     }
 

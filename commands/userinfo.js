@@ -53,7 +53,7 @@ exports.run = (client, message) => {
   .setAuthor(`Info for ${user.username} Below`, user.displayAvatarURL)
   .setColor(stat);
     message.channel.send({embed})
-  .catch(console.error);
+  .catch(e => logger.error(e));
 };
 module.exports.help = {
     name: 'userinfo'

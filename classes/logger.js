@@ -9,7 +9,7 @@ class winstonLogger {
             colorize: true,
             timestamp: true,
             timestamp() {
-                return moment(new Date).format('DD/MM/YYYY h:mm:ss a');
+                return moment(new Date).format('h:mm:ss a');
             }
         });
         this.logger = new (this.winston.Logger)({

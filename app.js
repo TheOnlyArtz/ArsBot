@@ -67,7 +67,10 @@ client.on("ready", () => {
 
   }, (100000))
   const snekfetch = require('snekfetch')
-  logger.info("I\'m Online!");
+  logger.verbose(`${client.user.username} Is up and ready to work`);
+  logger.verbose(`Connected as: ${client.user.tag}`)
+  logger.verbose(`Client ID: ${client.user.id}`)
+  logger.verbose(`====================================`)
 });
 
 /*
@@ -253,7 +256,7 @@ client.on("message", async(message) => {
 
         })
         .catch(e => {
-          logger.error(e)
+          logger.error(`Common knexError not important`)
         })
 
       } else {
@@ -304,7 +307,7 @@ client.on("message", async(message) => {
 
         })
         .catch(e => {
-          logger.error(e)
+          logger.error(`Common knexError not important`)
         })
 
 

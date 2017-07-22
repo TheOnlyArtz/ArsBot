@@ -1,5 +1,6 @@
 const sql = require('sqlite');
 const Discord = require('discord.js');
+const chalk = require('chalk')
 
 sql.open('./localDBs/announcehey.sqlite');
 const knexDB = require('knex')({
@@ -60,10 +61,10 @@ exports.run = async (client, message, args) => {
                 message.channel.send({embed: upgradembed})
         .catch(e => logger.error(e));
             }).catch(err => {
-                console.error(err);
+                logger.error(err);
             });
         }).catch(err => {
-            console.error(err);
+            logger.error(err);
         });
     }
   // BlueCheese
@@ -522,7 +523,7 @@ exports.run = async (client, message, args) => {
                         smokes: (row[0].smokes + 1),
                         weedamount: (row[0].weedamount - 15)
                     }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                        console.log(`${message.author.username}, Just bought BlueCheese`);
+                        logger.info(`${chalk.blue(message.author.username)}, Just bought a cigarette`);
                     });
                 }
             })
@@ -578,7 +579,6 @@ exports.run = async (client, message, args) => {
                         knexDB.update({
                             weedamount: (row[0].weedamount - deposit)
                         }).into('weedbank').where('guildid', message.guild.id).andWhere('userid', message.author.id).then(() => {
-                            console.log(`${message.author.username}, Just bought BlueCheese`);
                         });
                     } else {
                         const embed = new Discord.RichEmbed()

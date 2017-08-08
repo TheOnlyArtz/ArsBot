@@ -46,7 +46,7 @@ exports.run = (client, message) => {
       Check if a mention found
     */
     if (message.mentions.users.size < 1) {
-        return message.reply('You need to mention someone to Ban him!.').catch(e => logger.error(e))
+        return message.reply('You need to mention someone to Ban them!').catch(e => logger.error(e))
     }
     /*
       Dont allow self punish
@@ -78,7 +78,7 @@ exports.run = (client, message) => {
     */
 
     if (!message.guild.member(user).bannable) {
-        return message.reply('This member is above me in the `role chain` Can\'t ban him').catch(e => logger.error(e))
+        return message.reply('This member is above me in the `role chain` Can\'t ban them').catch(e => logger.error(e))
     }
     /*
       Sends a DM to the user who's getting banned
